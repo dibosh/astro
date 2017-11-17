@@ -8,6 +8,13 @@ export function NavbarDirective() {
       brandUrl: '@',
       brandLogo: '@',
       navItems: '='
+    },
+    link: function (scope) {
+      scope.isNavbarCollapsed = true;
+
+      scope.toggleCollapse = function () {
+        scope.isNavbarCollapsed = !scope.isNavbarCollapsed;
+      }
     }
   };
 

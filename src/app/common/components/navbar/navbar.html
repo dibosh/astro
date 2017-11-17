@@ -4,9 +4,15 @@
       <a class="navbar-brand" ng-href="{{ brandUrl }}">
         <img class="logo" ng-src="{{ brandLogo }}">
       </a>
+
+      <button type="button" ng-click="toggleCollapse()" class="navbar-toggle" ng-class="{'collapsed': isNavbarCollapsed}">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+    <div class="collapse navbar-collapse" ng-class="{'in': !isNavbarCollapsed}">
       <ul class="nav navbar-nav">
         <li ng-repeat="navItem in navItems" ui-sref-active="active">
           <a ui-sref="{{ navItem.stateName }}">
