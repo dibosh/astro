@@ -5,6 +5,7 @@ import {routerConfig} from './index.route';
 import {runBlock} from './index.run';
 import './base/index.module';
 import './channels/index.module';
+import './tv.guide/index.module';
 import './common/index.module';
 
 angular.module('astro', [
@@ -16,8 +17,9 @@ angular.module('astro', [
     'toastr',
     // App specific modules
     'astro.base',
+    'astro.common',
     'astro.channels',
-    'astro.common'
+    'astro.tv-guide'
   ])
   .constant('moment', moment)
   .config(config)

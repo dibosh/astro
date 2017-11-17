@@ -3,14 +3,17 @@ export class BaseController {
     this.navs = [
       {
         title: 'Channels',
-        url: '/'
+        stateName: 'channels'
       },
       {
         title: 'TV Guide',
-        url: '/tv-guide'
+        stateName: 'tv-guide'
       }
     ];
 
-    this.title = 'My Astro';
+    this.brand = {
+      url: 'https://www.astro.com.my/',
+      logo: 'app/assets/images/logo.png'
+    }
   }
 }
