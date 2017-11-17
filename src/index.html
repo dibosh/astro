@@ -18,11 +18,11 @@
     <!-- endinject -->
     <!-- endbuild -->
   </head>
-  <body>
+  <body ng-controller="BaseController as base">
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <acme-navbar></acme-navbar>
+    <acme-navbar brand-name="{{ base.brand.name }}" brand-logo="{{ base.brand.logo }}" brand-url="{{ base.brand.url }}" nav-items="base.navs"></acme-navbar>
     <div ui-view></div>
 
     <!-- build:js(src) scripts/vendor.js -->
