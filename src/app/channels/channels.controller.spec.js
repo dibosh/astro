@@ -4,7 +4,7 @@ describe('controllers', () => {
   beforeEach(angular.mock.module('astro'));
 
   beforeEach(inject(($controller) => {
-    vm = $controller('HomeController');
+    vm = $controller('ChannelsController');
   }));
 
   it('should have a basic title', () => {

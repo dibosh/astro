@@ -1,10 +1,10 @@
 export function routerConfig ($stateProvider, $urlRouterProvider) {
   'ngInject';
   $stateProvider
-    .state('home', {
+    .state('channels', {
       url: '/',
-      templateUrl: 'app/home/home.html',
-      controller: 'HomeController',
+      templateUrl: 'app/channels/channels.html',
+      controller: 'ChannelsController',
       controllerAs: 'vm'
     });
 

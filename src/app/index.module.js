@@ -3,8 +3,9 @@
 import {config} from './index.config';
 import {routerConfig} from './index.route';
 import {runBlock} from './index.run';
-import './home/index.module'
-import './common/index.module'
+import './base/index.module';
+import './channels/index.module';
+import './common/index.module';
 
 angular.module('astro', [
     'ngAnimate',
@@ -14,7 +15,8 @@ angular.module('astro', [
     'ui.bootstrap',
     'toastr',
     // App specific modules
-    'astro.home',
+    'astro.base',
+    'astro.channels',
     'astro.common'
   ])
   .constant('moment', moment)
