@@ -51,5 +51,6 @@ var buildStyles = function() {
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
+    .pipe($.replace('/bootstrap-sass/assets/fonts/', '/../bower_components/bootstrap-sass/assets/fonts/'))
     .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/app/')));
 };
