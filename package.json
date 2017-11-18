@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {},
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "start": "gulp; nodemon ./server/index.js;"
   },
   "devDependencies": {
     "babel-core": "~6.7.4",
@@ -52,6 +53,13 @@
     "uglify-save-license": "~0.4.1",
     "webpack-stream": "~2.1.1",
     "wiredep": "~2.2.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "nodemon": "^1.10.2",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1"
   },
   "engines": {
     "node": ">=0.10.0"
