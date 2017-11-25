@@ -21,6 +21,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+// logging for all routes
+app.use(function (req, res, next) {
+  console.log('%s %s %s %s', new Date(), req.method, req.url, req.path);
+  next();
+});
+
 app.use('/api', router);
 
 // Error handling
