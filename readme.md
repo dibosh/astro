@@ -1,11 +1,25 @@
-#### How to run in local
+#### Setup
    - `npm install -g gulp`
    - `npm install`
    - `bower install`
+
+#### Frontend
    - `gulp serve`
 
-#### How to build for deployment
+##### Building for deployment
    - `gulp`
 
-#### Running in local from built distro
+##### Running from built distro
    - `gulp serve:dist`
+
+#### Backend for Frontend(*[BFF](http://samnewman.io/patterns/architectural/bff/)*)
+
+##### Run server
+   - `node server/index.js`
+
+##### API
+   - `/api/channels` - get all the channels with necessary info
+   - `/api/channels/:channelId` - get single channel info
+
+#### Run altogether
+   - `npm start`
