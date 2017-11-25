@@ -20,8 +20,8 @@ utils.getErrorInterpretation = function (errorObject) {
   }
 };
 
-utils.prepareChannelsUrl = function () {
-  return API_URL + '/ams/v3/getChannels';
+utils.prepareUrl = function (path) {
+  return API_URL + path;
 };
 
 utils.makeHttpRequest = function (method, url, headers) {
