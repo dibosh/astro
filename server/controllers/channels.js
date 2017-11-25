@@ -5,7 +5,7 @@ var utils = require('../common/utils');
 router.get('/', function (req, res) {
   var pageSize = req.query.pageSize || 10;
   var offset = (req.query.pageNumber || 1) - 1;
-  utils.makeHttpRequest(null, utils.prepareUrl('/ams/v3/getChannels'), null)
+  utils.makeHttpRequest(null, utils.prepareChannelsUrl(), null)
     .then(function (response) {
       var rawChannels = response.body.channel;
       var slice = rawChannels.slice(offset * pageSize, offset * pageSize + pageSize + 1);
