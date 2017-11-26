@@ -3,6 +3,7 @@ export function NavbarDirective() {
 
   let directive = {
     restrict: 'E',
+    replace: true,
     templateUrl: 'app/common/components/navbar/navbar.html',
     scope: {
       brandUrl: '@',
