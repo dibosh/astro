@@ -1,32 +1,32 @@
 <div class="channel-tiles-wrapper">
-  <div class="spinner" ng-if="isDataLoading">
+  <div class="spinner" ng-if="isLoading">
     <div class="bounce1"></div>
     <div class="bounce2"></div>
     <div class="bounce3"></div>
   </div>
 
-  <ul class="channel-tiles" ng-if="!isDataLoading">
+  <ul class="channel-tiles" ng-if="!isLoading">
     <li class="channel-tile-item" ng-repeat="channel in channels">
       <div class="tile">
-        <a class="article-link" ng-href="{{ article.link }}">
+        <a class="channel-link" ng-href="{{ channel.link }}">
           <div class="featured-image-container">
-            <img class="featured-image" ng-src="{{ article.image }}"/>
+            <div class="featured-image-overlay"></div>
+            <img class="featured-image" ng-src="{{ channel.logo }}"/>
           </div>
-          <div class="article-info">
-            <h3 class="title">{{ article.title }}</h3>
-            <p class="body" ng-if="article.body">{{ article.body }}</p>
-            <p class="reason">Reason: {{ article.reason }}</p>
+          <div class="channel-info">
+            <h3 class="title">{{ channel.title }}</h3>
+            <p class="body" ng-if="channel.description">{{ channel.description }}</p>
           </div>
         </a>
         <div class="action-bar">
-          <span class="action" ng-class="{'selected': article.isSelected}"
-                ng-click="toggleSelectionFor(article)">
-            <i class="fa fa-check"></i>
+          <span class="action" ng-class="{'selected': channel.isFavorite}"
+                ng-click="toggleFavoriteFor(channel)">
+            <i class="glyphicon glyphicon-heart"></i>
           </span>
         </div>
       </div>
     </li>
-    <li class="alert warning" ng-if="articles.length === 0">Sorry, no articles to show!</li>
+    <li class="alert warning" ng-if="channels.length === 0">Sorry, didn't find any channels for you!</li>
   </ul>
 </div>
 
