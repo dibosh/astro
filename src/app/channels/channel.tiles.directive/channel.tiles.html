@@ -1,4 +1,21 @@
 <div class="channel-tiles-wrapper">
+  <div class="filter-header" ng-if="totalChannels">
+    <div class="filter-block">
+    </div>
+    <div class="pagination-block">
+      <label for="pagination" class="pagination-pos-label" ng-bind-html="getCurrentlyShowingInfo()"></label>
+      <nav id="pagination">
+        <ul class="pagination">
+          <li ng-repeat="nav in paginationNavs">
+            <a href="#" ng-click="onPaginate(nav.direction)">
+              <span class="glyphicon" ng-class="nav.icon"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
   <div class="spinner" ng-if="isLoading">
     <div class="bounce1"></div>
     <div class="bounce2"></div>

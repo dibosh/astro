@@ -4,6 +4,36 @@ $color-no-img-bg: #34495E;
 .channel-tiles-wrapper {
   height: 100%;
 
+  .filter-header {
+    display: flex;
+    align-items: center;
+
+    .filter-block,  .pagination-block{
+      display: flex;
+      align-items: center;
+    }
+
+    .filter-block {
+      flex-grow: 2;
+    }
+
+    .pagination-block {
+      flex-grow: 1;
+
+      .pagination-pos-label {
+        font-weight: 400;
+        color: $color-hoki;
+        font-size: 12px;
+        margin-right: 12px;
+
+        strong {
+          color: $color-lynch;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
   .spinner {
     margin: 20px auto;
     width: 80px;
