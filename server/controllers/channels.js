@@ -22,13 +22,13 @@ function _handleHttpRequestPromise(httpPromise, res) {
 }
 
 function _makeChannelListResponse(pageSize, pageNumber) {
-  pageSize = pageSize || 10;
-  var offset = (pageNumber || 1) - 1;
+  pageSize = parseInt(pageSize || 10);
+  var offset = parseInt(pageNumber || 1) - 1;
   var url = utils.prepareUrl('/ams/v3/getChannels');
   return utils.makeHttpRequest(null, url, null)
     .then(function (response) {
       var rawChannels = response.body.channel;
-      var slice = rawChannels.slice(offset * pageSize, offset * pageSize + pageSize + 1);
+      var slice = rawChannels.slice(offset * pageSize, offset * pageSize + pageSize);
       var channelsResp = [];
       slice.forEach(function (channel) {
         channelsResp.push(createChannelResponse(channel));
