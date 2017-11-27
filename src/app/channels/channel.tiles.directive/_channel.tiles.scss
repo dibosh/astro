@@ -79,7 +79,7 @@ $color-no-img-bg: #34495E;
           width: 100%;
           padding: 10px;
           object-position: center;
-          object-fit: cover;
+          object-fit: contain;
           border: 0;
           background: $color-no-img-bg;
         }
