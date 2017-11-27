@@ -1,10 +1,16 @@
 {
   "name": "astro",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "nodemon": "^1.10.2",
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1"
+  },
   "scripts": {
     "test": "gulp test",
-    "start": "gulp; nodemon ./server/index.js;"
+    "start": "concurrently \"gulp watch:dist\" \"nodemon ./server/index.js\""
   },
   "devDependencies": {
     "babel-core": "~6.7.4",
@@ -13,6 +19,7 @@
     "browser-sync": "~2.9.11",
     "browser-sync-spa": "~1.0.3",
     "chalk": "~1.1.1",
+    "concurrently": "^3.5.1",
     "del": "~2.0.2",
     "eslint-loader": "~1.1.0",
     "eslint-plugin-angular": "~0.12.0",
@@ -53,13 +60,6 @@
     "uglify-save-license": "~0.4.1",
     "webpack-stream": "~2.1.1",
     "wiredep": "~2.2.2"
-  },
-  "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "nodemon": "^1.10.2",
-    "request": "^2.74.0",
-    "request-promise": "^4.1.1"
   },
   "engines": {
     "node": ">=0.10.0"

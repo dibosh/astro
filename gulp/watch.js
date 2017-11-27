@@ -30,3 +30,14 @@ gulp.task('watch', ['scripts:watch', 'inject'], function () {
     browserSync.reload(event.path);
   });
 });
+
+gulp.task('watch:dist', ['default'], function () {
+  gulp.watch([
+    path.join(conf.paths.src, '/app/**/*.css'),
+    path.join(conf.paths.src, '/app/**/*.scss'),
+    path.join(conf.paths.src, '/app/**/*.js'),
+    path.join(conf.paths.src, '/app/**/*.html')
+  ], function() {
+    gulp.start('default');
+  });
+});
