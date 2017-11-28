@@ -30,19 +30,42 @@ export function ChannelTilesDirective() {
         currentPage: 1
       };
 
+      scope.sortByOptions = [
+        {
+          label: 'Title',
+          value: 'title'
+        },
+        {
+          label: 'Channel Number',
+          value: 'setTopBoxNumber'
+        }
+      ];
+
+      scope.sortBy = function (selectedSortOption) {
+        scope.sortChannelsBy = selectedSortOption.value;
+      };
+
       scope.getCurrentlyShowingInfo = function () {
-        var currPos = (scope.paginationConfig.currentPage - 1) * scope.paginationConfig.pageSize + 1;
-        var endPos = currPos + scope.paginationConfig.pageSize - 1;
+        let currPos = (scope.paginationConfig.currentPage - 1) * scope.paginationConfig.pageSize + 1;
+        let endPos = currPos + scope.paginationConfig.pageSize - 1;
         currPos = currPos <= 0 ? scope.paginationConfig.pageStart : currPos;
         endPos = endPos > scope.totalChannels ? scope.totalChannels : endPos;
         return `Showing <strong>${currPos}-${endPos}</strong> of <strong>${scope.totalChannels}</strong> channels`;
       };
 
+      scope.isPaginationInvalidForDirection = function (direction) {
+        let startPage = scope.paginationConfig.pageStart;
+        let endPage = scope.paginationConfig.pageEnd;
+        let invalidLeft = (direction === 'left' && scope.paginationConfig.currentPage === startPage);
+        let invalidRight = (direction === 'right' && scope.paginationConfig.currentPage === endPage);
+        return  invalidLeft || invalidRight;
+      };
+
       scope.onPaginate = function (direction) {
-        var currentPage = scope.paginationConfig.currentPage;
+        let currentPage = scope.paginationConfig.currentPage;
 
         direction === 'left' ? currentPage -= 1 :  currentPage+= 1;
-        
+
         if (currentPage < scope.paginationConfig.pageStart) {
           currentPage = scope.paginationConfig.pageStart;
         }
@@ -52,7 +75,6 @@ export function ChannelTilesDirective() {
         }
 
         scope.paginationConfig.currentPage = currentPage;
-
         scope.paginate({pageSize: scope.paginationConfig.pageSize, pageNumber: scope.paginationConfig.currentPage});
       };
 

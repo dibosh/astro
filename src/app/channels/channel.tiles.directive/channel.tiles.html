@@ -1,13 +1,15 @@
 <div class="channel-tiles-wrapper">
   <div class="filter-header" ng-if="totalChannels">
     <div class="filter-block">
+      <label for="sort-by" class="custom-label">Sort by</label>
+      <dropdown id="sort-by" items="sortByOptions" label-key="'label'" value-key="'value'" on-item-select="sortBy(selectedItem)"></dropdown>
     </div>
     <div class="pagination-block">
-      <label for="pagination" class="pagination-pos-label" ng-bind-html="getCurrentlyShowingInfo()"></label>
-      <nav id="pagination">
+      <label for="pagination" class="custom-label" ng-bind-html="getCurrentlyShowingInfo()"></label>
+      <nav id="pagination" class="pagination-nav">
         <ul class="pagination">
           <li ng-repeat="nav in paginationNavs">
-            <a href="#" ng-click="onPaginate(nav.direction)">
+            <a href="#" ng-disabled="isPaginationInvalidForDirection(nav.direction)" ng-click="onPaginate(nav.direction)">
               <span class="glyphicon" ng-class="nav.icon"></span>
             </a>
           </li>
@@ -23,8 +25,9 @@
   </div>
 
   <ul class="channel-tiles" ng-if="!isLoading">
-    <li class="channel-tile-item" ng-repeat="channel in channels">
+    <li class="channel-tile-item" ng-repeat="channel in channels | orderBy: sortChannelsBy">
       <div class="tile">
+        <span class="channel-stb-no">{{ channel.setTopBoxNumber }}</span>
         <a class="channel-link" ng-href="{{ channel.link }}">
           <div class="featured-image-container">
             <div class="featured-image-overlay"></div>
