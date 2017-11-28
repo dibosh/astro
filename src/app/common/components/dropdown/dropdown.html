@@ -1,0 +1,11 @@
+<div class="dropdown" ng-class="{'open': isOpen}" off-click="closeDropdown()">
+  <button class="btn btn-default" ng-click="toggleDropdown()">
+    {{ selectedItem[labelKey] }}
+    <span class="glyphicon" ng-class="{'glyphicon-triangle-bottom': !isOpen, 'glyphicon-triangle-top': isOpen}"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li ng-repeat="item in items" ng-click="selectItem(item)">
+      <a href="#">{{ item[labelKey] }}</a>
+    </li>
+  </ul>
+</div>
