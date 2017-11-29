@@ -64,6 +64,7 @@ function createChannelResponse(channel) {
     description: channel.channelDescription,
     category: channel.channelCategory,
     id: channel.channelId,
+    isHD: channel.channelHD,
     setTopBoxNumber: channel.channelStbNumber,
     language: channel.channelLanguage,
     color: channel.channelColor1 || channel.channelColor2 || channel.channelColor3,
