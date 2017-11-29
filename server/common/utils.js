@@ -24,16 +24,28 @@ utils.prepareUrl = function (path) {
   return API_URL + path;
 };
 
-utils.makeHttpRequest = function (method, url, headers) {
-  var requestConfig = _prepareHttpRequestConfig(method, url, headers);
+utils.makeHttpRequest = function (method, url, params, headers) {
+  var requestConfig = _prepareHttpRequestConfig(method, url, params, headers);
   return request(requestConfig);
 };
 
-function _prepareHttpRequestConfig(method, url, headers) {
+utils.handleHttpRequestPromise = function (httpPromise, res) {
+  httpPromise
+    .then(function (response) {
+      res.status(response.status).send(response.body);
+    })
+    .catch(function (errorResponse) {
+      var error = utils.getErrorInterpretation(errorResponse);
+      res.status(error.statusCode).send(error.resolvedResponse);
+    });
+};
+
+function _prepareHttpRequestConfig(method, url, params, headers) {
   return {
     method: method || 'GET',
     url: url,
     json: true,
+    params: params,
     resolveWithFullResponse: true,
     headers: headers || {
       'User-Agent': 'dibosh'
