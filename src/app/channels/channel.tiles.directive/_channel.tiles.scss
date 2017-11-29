@@ -63,6 +63,7 @@ $color-no-img-bg: #34495E;
     padding: 0 18px;
     margin: 20px 0 50px;
     position: relative;
+    cursor: pointer;
 
     .tile {
       height: 100%;
@@ -192,7 +193,7 @@ $color-no-img-bg: #34495E;
           height: 23px;
           background-color: #edf2f6;
           color: #B2C0C8;
-          line-height: 22px;
+          line-height: 23px;
           text-align: center;
           font-size: 12px;
           border-radius: 50%;

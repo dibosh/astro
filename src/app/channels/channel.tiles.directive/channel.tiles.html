@@ -27,7 +27,7 @@
   <ul class="channel-tiles" ng-if="!isLoading">
     <li class="channel-tile-item" ng-repeat="channel in channels | orderBy: sortChannelsBy">
       <div class="tile">
-        <span class="channel-stb-no" title="Channel Number">{{ channel.setTopBoxNumber }}</span>
+        <span class="channel-stb-no">CH {{ channel.setTopBoxNumber }}</span>
         <a class="channel-link" ng-href="{{ channel.link }}">
           <div class="featured-image-container">
             <div class="featured-image-overlay"></div>
