@@ -3,29 +3,18 @@ var router = express.Router();
 var utils = require('../common/utils');
 
 router.get('/', function (req, res) {
-  _handleHttpRequestPromise(_makeChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
+  utils.handleHttpRequestPromise(_makeChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
 });
 
 router.get('/:channelId', function (req, res) {
-  _handleHttpRequestPromise(_makeSingleChannelResponse(req.params.channelId), res);
+  utils.handleHttpRequestPromise(_makeSingleChannelResponse(req.params.channelId), res);
 });
-
-function _handleHttpRequestPromise(httpPromise, res) {
-  httpPromise
-    .then(function (response) {
-      res.status(response.status).send(response.body);
-    })
-    .catch(function (errorResponse) {
-      var error = utils.getErrorInterpretation(errorResponse);
-      res.status(error.statusCode).send(error.resolvedResponse);
-    });
-}
 
 function _makeChannelListResponse(pageSize, pageNumber) {
   pageSize = parseInt(pageSize || 10);
   var offset = parseInt(pageNumber || 1) - 1;
   var url = utils.prepareUrl('/ams/v3/getChannels');
-  return utils.makeHttpRequest(null, url, null)
+  return utils.makeHttpRequest(null, url)
     .then(function (response) {
       var rawChannels = response.body.channel;
       var slice = rawChannels.slice(offset * pageSize, offset * pageSize + pageSize);
@@ -48,8 +37,8 @@ function _makeChannelListResponse(pageSize, pageNumber) {
 }
 
 function _makeSingleChannelResponse(channelId) {
-  var url = utils.prepareUrl('/ams/v3/getChannels') + '?channelId=' + channelId;
-  return utils.makeHttpRequest(null, url, null)
+  var url = utils.prepareUrl('/ams/v3/getChannels');
+  return utils.makeHttpRequest(null, url, {channelId: channelId})
     .then(function (response) {
       return {
         status: response.body.responseCode,
