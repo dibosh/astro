@@ -45,8 +45,8 @@ function _prepareHttpRequestConfig(method, url, params, headers) {
     method: method || 'GET',
     url: url,
     json: true,
-    params: params,
     resolveWithFullResponse: true,
+    params: params,
     headers: headers || {
       'User-Agent': 'dibosh'
     }
