@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var utils = require('../common/utils');
+var events = require('./events');
 
 router.get('/', function (req, res) {
   utils.handleHttpRequestPromise(_makeChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
@@ -10,10 +11,12 @@ router.get('/:channelId', function (req, res) {
   utils.handleHttpRequestPromise(_makeSingleChannelResponse(req.params.channelId), res);
 });
 
+router.use('/:channelId/events', events);
+
 function _makeChannelListResponse(pageSize, pageNumber) {
   pageSize = parseInt(pageSize || 10);
   var offset = parseInt(pageNumber || 1) - 1;
-  var url = utils.prepareUrl('/ams/v3/getChannels');
+  var url = utils.prepareUrl('ams/v3/getChannels');
   return utils.makeHttpRequest(null, url)
     .then(function (response) {
       var rawChannels = response.body.channel;
