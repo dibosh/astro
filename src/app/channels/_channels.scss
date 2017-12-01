@@ -6,11 +6,13 @@ div.modal-body {
   div.info {
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
     img.logo {
       width: 200px;
       height: 100px;
+      background: $color-lynch;
+      margin-right: 20px;
       object-fit: contain;
-      object-position: left;
     }
   }
 

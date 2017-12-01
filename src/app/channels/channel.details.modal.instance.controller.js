@@ -24,7 +24,7 @@ class ChannelDetailsModalInstanceController {
     this._channelsService.getEvents(channelId, periodStart, periodEnd)
       .then((response) => {
         this.channelEvents = this._.map(response.events, (event)=>{
-          event.airingTime = this._moment(event.airingTime).format('hh:mm a');
+          event.airingTime = this._moment(event.airingTime).format('HH:mm');
           return event;
         });
       })
