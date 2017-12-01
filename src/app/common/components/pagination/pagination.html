@@ -1,0 +1,13 @@
+<div class="pagination-block">
+  <label for="pagination" class="custom-label" ng-bind-html="getCurrentlyShowingInfo()"></label>
+  <nav id="pagination" class="pagination-nav">
+    <ul class="pagination">
+      <li ng-repeat="nav in paginationNavs">
+        <a href="#" ng-class="{'disabled': isPaginationInvalidForDirection(nav.direction)}"
+           ng-click="onPaginate(nav.direction)">
+          <span class="glyphicon" ng-class="nav.icon"></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

@@ -4,18 +4,7 @@
       <label for="sort-by" class="custom-label">Sort by</label>
       <dropdown id="sort-by" items="sortByOptions" label-key="'label'" value-key="'value'" on-item-select="sortBy(selectedItem)"></dropdown>
     </div>
-    <div class="pagination-block">
-      <label for="pagination" class="custom-label" ng-bind-html="getCurrentlyShowingInfo()"></label>
-      <nav id="pagination" class="pagination-nav">
-        <ul class="pagination">
-          <li ng-repeat="nav in paginationNavs">
-            <a href="#" ng-class="{'disabled': isPaginationInvalidForDirection(nav.direction)}" ng-click="onPaginate(nav.direction)">
-              <span class="glyphicon" ng-class="nav.icon"></span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <pagination total-items="totalChannels" page-size="pageSize" paginate="paginate"></pagination>
   </div>
 
   <div class="spinner" ng-if="isLoading">

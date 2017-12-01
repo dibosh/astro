@@ -3,7 +3,7 @@ export function routerConfig ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('root', {
       abstract: true,
-      template: '<div ui-view></div>',
+      template: '<div ui-view=""></div>',
       resolve: {
         channels: (_, $q, ChannelBasket) => {
           let preloaded = !_.isEmpty(ChannelBasket.channels);

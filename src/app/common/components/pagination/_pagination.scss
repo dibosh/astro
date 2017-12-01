@@ -1,0 +1,10 @@
+.pagination-block {
+  display: flex;
+  align-items: center;
+
+  .pagination-nav {
+    .pagination {
+      margin: 0;
+    }
+  }
+}

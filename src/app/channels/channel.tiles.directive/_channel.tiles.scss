@@ -19,23 +19,13 @@ $color-no-img-bg: #34495E;
       }
     }
 
-    .filter-block,  .pagination-block{
+    .filter-block {
       display: flex;
       align-items: center;
     }
 
     .filter-block {
       float: left;
-    }
-
-    .pagination-block {
-      float: right;
-
-      .pagination-nav {
-        .pagination {
-          margin: 0;
-        }
-      }
     }
   }
 }
