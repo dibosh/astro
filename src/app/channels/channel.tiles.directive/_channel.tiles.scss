@@ -103,16 +103,6 @@ $color-no-img-bg: #34495E;
         left: 0px;
         top: 0px;
 
-        div.featured-image-overlay {
-          background: rgba($color-no-img-bg, 0.1);
-          position: absolute;
-          left: 0;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 10;
-        }
-
         img.featured-image {
           height: 100%;
           width: 100%;
@@ -120,7 +110,7 @@ $color-no-img-bg: #34495E;
           object-position: center;
           object-fit: contain;
           border: 0;
-          background: $color-no-img-bg;
+          background: $color-lynch;
         }
       }
 
