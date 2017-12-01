@@ -33,6 +33,11 @@ function _makeEventListResponse(channelId, startTime) {
 function createEventResponse(event) {
   return {
     id: event.eventID,
+    channel: {
+      id: event.channelId,
+      number: event.channelStbNumber,
+      title: event.channelTitle
+    },
     programTitle: event.programmeTitle,
     description: event.shortSynopsis || event.longSynopsis,
     genre: event.genre,
