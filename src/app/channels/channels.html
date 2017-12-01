@@ -1,8 +1,6 @@
 <div class="container">
   <channel-tiles
     channels="vm.channels"
-    page-size="vm.pageSize"
-    paginate="vm.paginate(pageSize, pageNumber)"
     is-loading="vm.isLoading"
-    total-channels="vm.totalChannels" on-channel-click="vm.showChannelDetails(channel)"></channel-tiles>
+    on-channel-click="vm.showChannelDetails(channel)"></channel-tiles>
 </div>

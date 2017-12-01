@@ -1,27 +1,11 @@
 class ChannelsController {
 
-  constructor($document, $uibModal, channelsService) {
+  constructor($document, $uibModal, channels) {
     this._modalFactory = $uibModal;
     this._documentService = $document;
-    this._channelsService = channelsService;
 
-    this.pageSize = 12;
-    this.channels = [];
-    this.paginate(this.pageSize, 1);
-  }
-
-  paginate(pageSize, pageNumber) {
-    this.isLoading = true;
-    this._channelsService.getChannels(pageSize, pageNumber)
-      .then((response) => {
-        this.channels = response.channels;
-        if (!this.totalChannels) {
-          this.totalChannels = response.numFound;
-        }
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+    this.channels = channels;
+    this.isLoading = false;
   }
 
   showChannelDetails(channel) {
@@ -41,6 +25,6 @@ class ChannelsController {
   }
 }
 
-ChannelsController.$inject = ['$document', '$uibModal', 'channelsService'];
+ChannelsController.$inject = ['$document', '$uibModal', 'channels'];
 
 export default ChannelsController;
