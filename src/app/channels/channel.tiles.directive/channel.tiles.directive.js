@@ -8,9 +8,6 @@ export function ChannelTilesDirective() {
     scope: {
       isLoading: '=',
       channels: '=',
-      totalChannels: '=',
-      pageSize: '=',
-      paginate: '&',
       onChannelClick: '&'
     },
     link: function (scope) {
