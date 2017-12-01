@@ -1,4 +1,4 @@
-/* global moment:false */
+/* global moment:false _:false */
 
 import {config} from './index.config';
 import {routerConfig} from './index.route';
@@ -23,6 +23,7 @@ angular.module('astro', [
       'astro.tv-guide'
   ])
   .constant('moment', moment)
+  .constant('_', _)
   .config(config)
   .config(routerConfig)
   .run(runBlock);

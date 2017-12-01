@@ -1,7 +1,7 @@
 import {NavbarDirective} from './components/navbar/navbar.directive';
 import {DropdownDirective} from './components/dropdown/dropdown.directive'
 import {OffClickDirective} from './components/off.click.directive'
-import SimpleHTTPService from './services/simple.http.service.js';
+import SimpleHTTPService from './services/simple.http.service';
 
 angular.module('astro.common', [])
   .directive('acmeNavbar', NavbarDirective)
