@@ -3,6 +3,17 @@ div.modal-body {
   font-size: 12px;
   font-weight: 300;
 
+  div.info {
+    display: flex;
+    align-items: center;
+    img.logo {
+      width: 200px;
+      height: 100px;
+      object-fit: contain;
+      object-position: left;
+    }
+  }
+
   .channel-description {
     font-size: 13px;
     color: $color-lynch;
