@@ -2,9 +2,14 @@ var express = require('express');
 var router = express.Router();
 var utils = require('../common/utils');
 var events = require('./events');
+var url = utils.prepareUrl('ams/v3/getChannels');
 
 router.get('/', function (req, res) {
-  utils.handleHttpRequestPromise(_makeChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
+  utils.handleHttpRequestPromise(_makePaginatedChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
+});
+
+router.get('/all', function (req, res) {
+  utils.handleHttpRequestPromise(_makeChannelListResponse(), res);
 });
 
 router.get('/:channelId', function (req, res) {
@@ -13,10 +18,9 @@ router.get('/:channelId', function (req, res) {
 
 router.use('/:channelId/events', events);
 
-function _makeChannelListResponse(pageSize, pageNumber) {
+function _makePaginatedChannelListResponse(pageSize, pageNumber) {
   pageSize = parseInt(pageSize || 10);
   var offset = parseInt(pageNumber || 1) - 1;
-  var url = utils.prepareUrl('ams/v3/getChannels');
   return utils.makeHttpRequest(null, url)
     .then(function (response) {
       var rawChannels = response.body.channel;
@@ -39,8 +43,26 @@ function _makeChannelListResponse(pageSize, pageNumber) {
     });
 }
 
+function _makeChannelListResponse() {
+  return utils.makeHttpRequest(null, url)
+    .then(function (response) {
+      var rawChannels = response.body.channel;
+      var channelsResp = [];
+      rawChannels.forEach(function (channel) {
+        channelsResp.push(createChannelResponse(channel));
+      });
+
+      return {
+        status: response.body.responseCode,
+        body: {
+          numFound: rawChannels.length,
+          channels: channelsResp
+        }
+      };
+    });
+}
+
 function _makeSingleChannelResponse(channelId) {
-  var url = utils.prepareUrl('/ams/v3/getChannels');
   return utils.makeHttpRequest(null, url, {channelId: channelId})
     .then(function (response) {
       return {
