@@ -8,7 +8,8 @@ export function NavbarDirective() {
     scope: {
       brandUrl: '@',
       brandLogo: '@',
-      navItems: '='
+      navItems: '=',
+      isPageLoading: '='
     },
     link: function (scope) {
       scope.isNavbarCollapsed = true;

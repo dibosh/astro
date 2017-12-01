@@ -1,5 +1,6 @@
-export class BaseController {
-  constructor () {
+class BaseController {
+  constructor ($rootScope) {
+    this.isStateLoading = false;
     this.navs = [
       {
         title: 'Channels',
@@ -11,9 +12,22 @@ export class BaseController {
       }
     ];
 
+    $rootScope.$on('$stateChangeStart', () => {
+      this.isStateLoading = true;
+    });
+
+    $rootScope.$on('$stateChangeSuccess', () => {
+      this.isStateLoading = false;
+    });
+
+
     this.brand = {
       url: 'https://www.astro.com.my/',
       logo: 'app/assets/images/logo.png'
     }
   }
 }
+
+BaseController.$inject = ['$rootScope'];
+
+export default BaseController;
