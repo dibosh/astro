@@ -6,13 +6,16 @@
   <button class="btn btn-default" ng-click="modalCtrl.close()">Close</button>
 </div>
 <div class="modal-body">
-  <div class="meta">
-    <p>Language: <strong>{{ modalCtrl.channel.language }}</strong></p>
-    <p>Category: <strong>{{ modalCtrl.channel.category }}</strong></p>
-    <p class="channel-description">{{ modalCtrl.channel.description }}</p>
+  <div class="info">
+    <img ng-src="{{ modalCtrl.channel.logo }}" alt="" class="logo">
+    <div class="meta">
+      <p>Language: <strong>{{ modalCtrl.channel.language }}</strong></p>
+      <p>Category: <strong>{{ modalCtrl.channel.category }}</strong></p>
+      <p class="channel-description">{{ modalCtrl.channel.description }}</p>
+    </div>
   </div>
   <div class="schedule">
-    <h4>Upcoming Programs</h4>
+    <h4>Upcoming Programs for Today</h4>
     <div class="spinner" ng-if="modalCtrl.isEventsLoading">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
@@ -25,6 +28,15 @@
           <small>{{ event.airingTime }}</small>
         </h4>
         <p class="list-group-item-text">{{ event.description }}</p>
+      </a>
+
+      <a href="#" class="list-group-item channel-event" ng-if="modalCtrl.channelEvents.length === 0">
+        <h4 class="list-group-item-heading">
+          <span>No programs found.</span>
+        </h4>
+        <p class="list-group-item-text">
+          The programs for today might have finished for this channel already. Please check back tomorrow.
+        </p>
       </a>
     </div>
   </div>
