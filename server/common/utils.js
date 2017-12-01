@@ -24,8 +24,8 @@ utils.prepareUrl = function (path) {
   return API_URL + path;
 };
 
-utils.makeHttpRequest = function (method, url, params, headers) {
-  var requestConfig = _prepareHttpRequestConfig(method, url, params, headers);
+utils.makeHttpRequest = function (method, url, params, data, headers) {
+  var requestConfig = _prepareHttpRequestConfig(method, url, params, data, headers);
   return request(requestConfig);
 };
 
@@ -40,17 +40,19 @@ utils.handleHttpRequestPromise = function (httpPromise, res) {
     });
 };
 
-function _prepareHttpRequestConfig(method, url, params, headers) {
-  return {
+function _prepareHttpRequestConfig(method, url, params, data, headers) {
+  var config = {
     method: method || 'GET',
-    url: url,
+    uri: url,
     json: true,
     resolveWithFullResponse: true,
-    params: params,
     headers: headers || {
       'User-Agent': 'dibosh'
     }
   };
+  if (params) { config.qs = params; }
+  if (data) { config.body = data; }
+  return config;
 }
 
 module.exports = utils;
