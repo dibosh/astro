@@ -4,7 +4,11 @@ class ChannelsService {
   }
 
   getChannels(pageSize, pageNumber) {
-    return this.simpleHttpService.makeGETRequest('channels', {pageSize: pageSize, pageNumber: pageNumber});
+    if (pageSize && pageNumber) {
+      return this.simpleHttpService.makeGETRequest('channels', {pageSize: pageSize, pageNumber: pageNumber});
+    } else {
+      return this.simpleHttpService.makeGETRequest('channels/all');
+    }
   }
 
   getEvents(channelId, periodStart, periodEnd) {
