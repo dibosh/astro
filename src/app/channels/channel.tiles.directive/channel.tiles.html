@@ -25,10 +25,10 @@
   </div>
 
   <ul class="channel-tiles" ng-if="!isLoading">
-    <li class="channel-tile-item" ng-repeat="channel in channels | orderBy: sortChannelsBy">
+    <li class="channel-tile-item" ng-click="onChannelClick({channel: channel})" ng-repeat="channel in channels | orderBy: sortChannelsBy">
       <div class="tile">
         <span class="channel-stb-no">CH {{ channel.setTopBoxNumber }}</span>
-        <a class="channel-link" ng-href="{{ channel.link }}">
+        <a class="channel-link" href="#">
           <div class="featured-image-container">
             <div class="featured-image-overlay"></div>
             <img class="featured-image" ng-src="{{ channel.logo }}"/>

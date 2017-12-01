@@ -1,0 +1,44 @@
+div.modal-body {
+  padding: 20px 40px;
+  font-size: 12px;
+  font-weight: 300;
+
+  .channel-description {
+    font-size: 13px;
+    color: $color-lynch;
+  }
+
+  .list-group-item-heading, .list-group-item-text {
+    font-weight: 400;
+  }
+
+  .list-group-item-heading {
+    font-size: 15px;
+    display: flex;
+    max-width: 100%;
+
+    span {
+      flex: 92% 2;
+    }
+
+    small {
+      flex-grow: 1;
+    }
+  }
+
+  .list-group-item-text {
+    color: $color-lynch;
+    max-width: 85%;
+  }
+}
+
+div.modal-header {
+  display: flex;
+  .modal-title {
+    flex-grow: 2;
+  }
+  span.stb-number {
+    flex-grow: 1;
+    color: $color-lynch;
+  }
+}

@@ -1,27 +1,46 @@
 class ChannelsController {
 
-  constructor(channelsService) {
+  constructor($document, $uibModal, channelsService) {
+    this._modalFactory = $uibModal;
+    this._documentService = $document;
+    this._channelsService = channelsService;
+
     this.pageSize = 12;
-    this.channelsService = channelsService;
+    this.channels = [];
     this.paginate(this.pageSize, 1);
   }
 
   paginate(pageSize, pageNumber) {
-    let self = this;
-    self.isLoading = true;
-    self.channelsService.getChannels(pageSize, pageNumber)
+    this.isLoading = true;
+    this._channelsService.getChannels(pageSize, pageNumber)
       .then((response) => {
-        self.channels = response.channels;
-        if (!self.totalChannels) {
-          self.totalChannels = response.numFound;
+        this.channels = response.channels;
+        if (!this.totalChannels) {
+          this.totalChannels = response.numFound;
         }
       })
       .finally(() => {
-        self.isLoading = false;
+        this.isLoading = false;
       });
+  }
+
+  showChannelDetails(channel) {
+    this._modalFactory.open({
+      animation: true,
+      templateUrl: 'app/channels/partials/channel.details.modal.html',
+      controller: 'ChannelDetailsModalInstanceController',
+      controllerAs: 'modalCtrl',
+      size: 'lg',
+      appendTo: this._documentService.find('body'),
+      resolve: {
+        channel: () => {
+          return channel;
+        }
+      }
+    });
   }
 }
 
-ChannelsController.$inject = ['channelsService'];
+ChannelsController.$inject = ['$document', '$uibModal', 'channelsService'];
 
 export default ChannelsController;

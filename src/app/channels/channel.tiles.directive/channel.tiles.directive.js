@@ -10,7 +10,8 @@ export function ChannelTilesDirective() {
       channels: '=',
       totalChannels: '=',
       pageSize: '=',
-      paginate: '&'
+      paginate: '&',
+      onChannelClick: '&'
     },
     link: function (scope) {
       scope.paginationNavs = [

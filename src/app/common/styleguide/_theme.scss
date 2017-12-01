@@ -2,3 +2,10 @@ $navbar-inverse-bg: $color-primary;
 $navbar-inverse-brand-color: $color-secondary;
 $navbar-inverse-link-color: $color-secondary;
 $navbar-inverse-toggle-border-color: $color-secondary;
+$btn-default-bg: $color-primary;
+$btn-default-color: white;
+
+
+.btn {
+  outline: none !important;
+}
