@@ -67,6 +67,13 @@ utils.loadGlobalSettings = function () {
   }
 };
 
+utils.updateGlobalSettings = function (update) {
+  Settings.findOneAndUpdate({settingsId: utils.settingsId}, update, function (err, settings) {
+    if (err) throw err;
+    utils.globalSettings = settings;
+  });
+};
+
 utils.getErrorInterpretation = function (errorObject) {
   if (errorObject.hasOwnProperty('statusCode') && errorObject.hasOwnProperty('error')) {
     // custom error object from request lib

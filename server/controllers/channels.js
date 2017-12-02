@@ -116,19 +116,11 @@ function _cacheChannels(rawChannels) {
 
         channels.push(savedChannel);
         if (index === rawChannels.length - 1) {
-          var isCached = true;
-          _updateChannelCacheState(isCached);
+          utils.updateGlobalSettings({isChannelsCached: true});
           resolve(channels);
         }
       });
     });
-  });
-}
-
-function _updateChannelCacheState(isCached) {
-  Settings.findOneAndUpdate({settingsId: utils.settingsId}, {isChannelsCached: isCached}, function (err, settings) {
-    if (err) throw err;
-    utils.globalSettings = settings;
   });
 }
 
