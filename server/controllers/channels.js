@@ -2,8 +2,10 @@ var express = require('express');
 var router = express.Router();
 var utils = require('../common/utils');
 var moment = require('moment');
+var _ = require('lodash');
 var eventsUrl = utils.prepareEventsUrl(utils.configVersion);
 var channelsUrl = utils.prepareChannelsUrl(utils.configVersion);
+var Channel = require('../models/channel');
 
 router.get('/', function (req, res) {
   utils.handleHttpRequestPromise(_makePaginatedChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
@@ -24,22 +26,17 @@ router.get('/:channelId/events', function (req, res) {
 function _makePaginatedChannelListResponse(pageSize, pageNumber) {
   pageSize = parseInt(pageSize || 10);
   var offset = parseInt(pageNumber || 1) - 1;
-  return utils.makeHttpRequest(null, channelsUrl)
-    .then(function (response) {
-      var rawChannels = response.body.channel;
-      var slice = rawChannels.slice(offset * pageSize, offset * pageSize + pageSize);
-      var channelsResp = [];
-      slice.forEach(function (channel) {
-        channelsResp.push(utils.createChannelResponse(channel));
-      });
 
+  return _prepareChannelCache()
+    .then(function (channels) {
+      var slice = channels.slice(offset * pageSize, offset * pageSize + pageSize);
       return {
-        status: response.body.responseCode,
+        status: 200,
         body: {
-          numFound: rawChannels.length,
+          numFound: channels.length,
           pageSize: pageSize,
           pageNumber: offset + 1,
-          channels: channelsResp,
+          channels: slice,
           next: '/channels?pageNumber=' + (offset + 2) + '&pageSize=' + pageSize
         }
       };
@@ -47,19 +44,13 @@ function _makePaginatedChannelListResponse(pageSize, pageNumber) {
 }
 
 function _makeChannelListResponse() {
-  return utils.makeHttpRequest(null, channelsUrl)
-    .then(function (response) {
-      var rawChannels = response.body.channel;
-      var channelsResp = [];
-      rawChannels.forEach(function (channel) {
-        channelsResp.push(utils.createChannelResponse(channel));
-      });
-
+  return _prepareChannelCache()
+    .then(function (channels) {
       return {
-        status: response.body.responseCode,
+        status: 200,
         body: {
-          numFound: rawChannels.length,
-          channels: channelsResp
+          numFound: channels.length,
+          channels: channels
         }
       };
     });
@@ -99,6 +90,33 @@ function _makeEventListResponse(channelId, startTime) {
         }
       };
     });
+}
+
+function _prepareChannelCache() {
+  var promise;
+  if (!_.get(utils.globalSettings, 'isChannelsCached')) {
+    promise = utils.makeHttpRequest(null, channelsUrl)
+      .then(function (response) {
+        var rawChannels = response.body.channel;
+        var channels = [];
+        rawChannels.forEach(function (channel) {
+          var channel = utils.createChannelInstanceFromRaw(channel);
+          channel.save(function (err) {
+            if (err) {
+              throw err;
+            }
+
+            channels.push(channel);
+          });
+        });
+
+        return channels;
+      });
+  } else {
+    promise = Channel.find().exec();
+  }
+
+  return promise;
 }
 
 module.exports = router;
