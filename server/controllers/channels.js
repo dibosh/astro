@@ -6,7 +6,6 @@ var _ = require('lodash');
 var eventsUrl = utils.prepareEventsUrl(utils.configVersion);
 var channelsUrl = utils.prepareChannelsUrl(utils.configVersion);
 var Channel = require('../models/channel');
-var Settings = require('../models/settings');
 
 router.get('/', function (req, res) {
   utils.handleHttpRequestPromise(_makePaginatedChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
@@ -14,10 +13,6 @@ router.get('/', function (req, res) {
 
 router.get('/all', function (req, res) {
   utils.handleHttpRequestPromise(_makeChannelListResponse(), res);
-});
-
-router.get('/:channelId', function (req, res) {
-  utils.handleHttpRequestPromise(_makeSingleChannelResponse(req.params.channelId), res);
 });
 
 router.get('/:channelId/events', function (req, res) {
@@ -68,16 +63,6 @@ function _makeChannelListResponse() {
           numFound: channels.length,
           channels: channels
         }
-      };
-    });
-}
-
-function _makeSingleChannelResponse(channelId) {
-  return utils.makeHttpRequest(null, channelsUrl, {channelId: channelId})
-    .then(function (response) {
-      return {
-        status: response.body.responseCode,
-        body: utils.createChannelResponse(response.body.channel[0])
       };
     });
 }

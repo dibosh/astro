@@ -111,16 +111,6 @@ utils.prepareEventsUrl = function (configVersion) {
   return utils.prepareUrl(eventsEndpoint, configVersion);
 };
 
-utils.prepareEventsRequestConfig = function (channelIds, start, end, configVersion) {
-  configVersion = configVersion || '';
-  var requestConfig = {};
-  requestConfig[configVersion === 'v2' ? 'channelIds' : 'channelId'] = channelIds;
-  requestConfig[configVersion === 'v2' ? 'startdate' : 'periodStart'] = start;
-  requestConfig[configVersion === 'v2' ? 'enddate' : 'periodEnd'] = end;
-  return requestConfig;
-};
-
-
 utils.makeHttpRequest = function (method, url, params, data, headers) {
   var requestConfig = _prepareHttpRequestConfig(method, url, params, data, headers);
   return request(requestConfig);
@@ -170,20 +160,6 @@ utils.createEventResponse = function (event) {
     featuredImage: event.epgEventImage,
     airingTime: event.displayDateTime,
     airingDuration: event.displayDuration
-  };
-};
-
-utils.createChannelResponse = function (channel) {
-  return {
-    title: channel.channelTitle,
-    description: channel.channelDescription,
-    category: channel.channelCategory,
-    id: channel.channelId,
-    isHD: channel.channelHD,
-    setTopBoxNumber: channel.channelStbNumber,
-    language: channel.channelLanguage,
-    color: channel.channelColor1 || channel.channelColor2 || channel.channelColor3,
-    logo: channel.channelExtRef[0].value
   };
 };
 
