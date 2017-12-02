@@ -35,6 +35,10 @@ app.use('/api', router);
 
 // Error handling
 app.use(function (err, req, res, next) {
+  if (!err) {
+    next();
+  }
+
   console.error(err.stack);
   res.status(500).send({
     'message': 'Internal Server Error'
