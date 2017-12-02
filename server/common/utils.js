@@ -1,7 +1,53 @@
 var request = require('request-promise');
+var mongoose = require('mongoose');
 var _ = require('lodash');
+var Channel = require('../models/channel');
+var Settings = require('../models/settings');
+
 var utils = {};
 utils.configVersion = '';
+
+utils.initializeDB = function () {
+  if (_.isUndefined(utils.db)) {
+    var config = require('./config' + utils.configVersion);
+    var dbURI = 'mongodb://' + config.MONGO_HOST + ':27017/' + config.MONGO_DB;
+    utils.db = mongoose.connect(dbURI, { useMongoClient: true });
+
+    mongoose.connection.on('connected', function () {
+      console.log('Mongoose default connection open to ' + dbURI);
+    });
+
+    mongoose.connection.on('error', function (err) {
+      console.log('Mongoose default connection error: ' + err);
+    });
+
+    mongoose.connection.on('disconnected', function () {
+      console.log('Mongoose default connection disconnected');
+    });
+  }
+};
+
+utils.getDB = function () {
+  return utils.db;
+};
+
+utils.shutdownDB = function () {
+  if (utils.db) {
+    mongoose.disconnect();
+  }
+};
+
+utils.loadGlobalSettings = function () {
+  if (_.isUndefined(utils.globalSettings)) {
+    var configId = 'f9b327e70bbcf42494ccb28b2d98e00e'; // some random ID
+    Settings.find({configId: configId}, function (err, config) {
+      if (err) {
+        throw err;
+      }
+      utils.globalSettings = config;
+    });
+  }
+};
 
 utils.getErrorInterpretation = function (errorObject) {
   if (errorObject.hasOwnProperty('statusCode') && errorObject.hasOwnProperty('error')) {
@@ -112,6 +158,20 @@ utils.createChannelResponse = function (channel) {
     color: channel.channelColor1 || channel.channelColor2 || channel.channelColor3,
     logo: channel.channelExtRef[0].value
   };
+};
+
+utils.createChannelInstanceFromRaw = function (channel) {
+  return Channel({
+    title: channel.channelTitle,
+    description: channel.channelDescription,
+    category: channel.channelCategory,
+    channelId: channel.channelId,
+    isHD: channel.channelHD,
+    setTopBoxNumber: channel.channelStbNumber,
+    language: channel.channelLanguage,
+    color: channel.channelColor1 || channel.channelColor2 || channel.channelColor3,
+    logo: channel.channelExtRef[0].value
+  });
 };
 
 module.exports = utils;

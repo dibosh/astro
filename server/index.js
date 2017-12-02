@@ -3,7 +3,11 @@
  */
 var express = require('express');
 var bodyParser = require('body-parser');
+var utils = require('./common/utils');
 var app = express();
+
+// initialize the database
+utils.initializeDB();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -37,5 +41,49 @@ app.use(function (err, req, res, next) {
   });
 });
 
-app.listen(port);
-console.log('Server started on port ' + port);
+var server = app.listen(port, function () {
+  console.log('Server started on port ' + port);
+});
+
+process.on('SIGTERM', shutDown);
+process.on('SIGINT', shutDown);
+
+let connections = [];
+
+server.on('connection', function (connection) {
+    connections.push(connection);
+    connection.on('close', function () {
+      connections = connections.filter(function (curr) {
+        return curr !== connection;
+      });
+    });
+});
+
+setInterval(function () {
+  console.log('%s connections currently open', connections.length);
+}, 1000);
+
+function shutDown() {
+  console.log('Received kill signal, shutting down gracefully');
+  utils.shutdownDB();
+
+  server.close(function () {
+    console.log('Closed out remaining connections');
+    process.exit(0);
+  });
+
+  connections.forEach(function (curr) {
+    curr.end();
+  });
+
+  setTimeout(function () {
+    connections.forEach(function (curr) {
+      curr.destroy();
+    });
+  }, 5000);
+
+  setTimeout(function () {
+    console.error('Could not close connections in time, forcefully shutting down');
+    process.exit(1);
+  }, 10000);
+}
