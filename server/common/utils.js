@@ -59,9 +59,11 @@ utils.loadGlobalSettings = function () {
           }
 
           utils.globalSettings = settings;
+          console.log('Global settings loaded.');
         });
       } else {
         utils.globalSettings = settings;
+        console.log('Global settings loaded.');
       }
     });
   }
