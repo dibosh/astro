@@ -15,6 +15,8 @@ utils.initializeDB = function () {
 
     mongoose.connection.on('connected', function () {
       console.log('Mongoose default connection open to ' + dbURI);
+      // load global settings
+      utils.loadGlobalSettings();
     });
 
     mongoose.connection.on('error', function (err) {
@@ -38,13 +40,29 @@ utils.shutdownDB = function () {
 };
 
 utils.loadGlobalSettings = function () {
-  if (_.isUndefined(utils.globalSettings)) {
-    var configId = 'f9b327e70bbcf42494ccb28b2d98e00e'; // some random ID
-    Settings.find({configId: configId}, function (err, config) {
+  var settingsId = 'f9b327e70bbcf42494ccb28b2d98e00e'; // some random ID
+
+  if (_.isEmpty(utils.globalSettings)) {
+    Settings.find({settingsId: settingsId}, function (err, settings) {
       if (err) {
         throw err;
       }
-      utils.globalSettings = config;
+
+      if (_.isEmpty(settings)) {
+        settings = Settings({
+          settingsId: settingsId,
+          isChannelsCached: false
+        });
+        settings.save(function (err) {
+          if (err) {
+            throw err;
+          }
+
+          utils.globalSettings = settings;
+        });
+      } else {
+        utils.globalSettings = settings;
+      }
     });
   }
 };
