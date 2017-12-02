@@ -1,0 +1,39 @@
+<div class="channel-tiles-wrapper">
+  <div class="filter-header">
+    <div class="filter-block">
+      <label for="sort-by" class="custom-label">Sort by</label>
+      <dropdown id="sort-by" items="sortByOptions" label-key="'label'" value-key="'value'" on-item-select="sortBy(selectedItem)"></dropdown>
+    </div>
+    <div class="pagination-block">
+      <ul uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></ul>
+    </div>
+  </div>
+
+  <div class="spinner" ng-if="isLoading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+</div>
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th ng-repeat="header in headers">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="row in rows">
+      <th>{{ $index }}</th>
+      <td ng-repeat="header in headers">
+        <div class="channel-info" ng-if="isChannelInfo(header)">
+          <img ng-src="{{ row[header].logo }}" alt="" class="logo">
+          <span class="title">{{ row[header].title }}</span>
+          <span class="stb">{{ row[header].setTopBoxNumber }}</span>
+        </div>
+        <span ng-if="isAiringTimeInfo(header)">{{ getTimeInfo(row[header]) }}</span>
+        <span ng-if="isNormalInfo(header)">{{ row[header] }}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -11,8 +11,8 @@ class ChannelsService {
     }
   }
 
-  getEvents(channelId, periodStart, periodEnd) {
-    return this.simpleHttpService.makeGETRequest('channels/' + channelId + '/events', {periodStart: periodStart, periodEnd: periodEnd});
+  getEvents(channelIds, periodStart, periodEnd) {
+    return this.simpleHttpService.makeGETRequest('channels/' + channelIds + '/events', {periodStart: periodStart, periodEnd: periodEnd});
   }
 }
 
