@@ -40,17 +40,17 @@ utils.shutdownDB = function () {
 };
 
 utils.loadGlobalSettings = function () {
-  var settingsId = 'f9b327e70bbcf42494ccb28b2d98e00e'; // some random ID
+  utils.settingsId = 'f9b327e70bbcf42494ccb28b2d98e00e'; // some random ID
 
   if (_.isEmpty(utils.globalSettings)) {
-    Settings.find({settingsId: settingsId}, function (err, settings) {
+    Settings.findOne({settingsId: utils.settingsId}, function (err, settings) {
       if (err) {
         throw err;
       }
 
       if (_.isEmpty(settings)) {
         settings = Settings({
-          settingsId: settingsId,
+          settingsId: utils.settingsId,
           isChannelsCached: false
         });
         settings.save(function (err) {

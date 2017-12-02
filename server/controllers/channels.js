@@ -6,6 +6,7 @@ var _ = require('lodash');
 var eventsUrl = utils.prepareEventsUrl(utils.configVersion);
 var channelsUrl = utils.prepareChannelsUrl(utils.configVersion);
 var Channel = require('../models/channel');
+var Settings = require('../models/settings');
 
 router.get('/', function (req, res) {
   utils.handleHttpRequestPromise(_makePaginatedChannelListResponse(req.query.pageSize, req.query.pageNumber), res);
@@ -93,30 +94,42 @@ function _makeEventListResponse(channelId, startTime) {
 }
 
 function _prepareChannelCache() {
-  var promise;
-  if (!_.get(utils.globalSettings, 'isChannelsCached')) {
-    promise = utils.makeHttpRequest(null, channelsUrl)
+  if (_.isEmpty(utils.globalSettings) || !utils.globalSettings.isChannelsCached) {
+    return utils.makeHttpRequest(null, channelsUrl)
       .then(function (response) {
-        var rawChannels = response.body.channel;
-        var channels = [];
-        rawChannels.forEach(function (channel) {
-          var channel = utils.createChannelInstanceFromRaw(channel);
-          channel.save(function (err) {
-            if (err) {
-              throw err;
-            }
-
-            channels.push(channel);
-          });
-        });
-
-        return channels;
+        return _cacheChannels(response.body.channel);
       });
   } else {
-    promise = Channel.find().exec();
+    return Channel.find().exec();
   }
+}
 
-  return promise;
+function _cacheChannels(rawChannels) {
+  return new Promise(function (resolve, reject) {
+    var channels = [];
+    _.each(rawChannels, function (channel, index) {
+      var channelModel = utils.createChannelInstanceFromRaw(channel);
+      channelModel.save(function (err, savedChannel) {
+        if (err) {
+          reject(err);
+        }
+
+        channels.push(savedChannel);
+        if (index === rawChannels.length - 1) {
+          var isCached = true;
+          _updateChannelCacheState(isCached);
+          resolve(channels);
+        }
+      });
+    });
+  });
+}
+
+function _updateChannelCacheState(isCached) {
+  Settings.findOneAndUpdate({settingsId: utils.settingsId}, {isChannelsCached: isCached}, function (err, settings) {
+    if (err) throw err;
+    utils.globalSettings = settings;
+  });
 }
 
 module.exports = router;
