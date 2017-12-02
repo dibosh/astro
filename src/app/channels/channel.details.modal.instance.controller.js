@@ -30,7 +30,7 @@ class ChannelDetailsModalInstanceController {
       })
       .finally(()=> {
         this.isEventsLoading = false;
-      })
+      });
   }
 
   close() {
