@@ -145,11 +145,9 @@ function _prepareHttpRequestConfig(method, url, params, data, headers) {
 utils.createEventResponse = function (event) {
   return {
     id: event.eventID,
-    channel: {
-      id: event.channelId,
-      number: event.channelStbNumber,
-      title: event.channelTitle
-    },
+    channelId: event.channelId,
+    channelNumber: event.channelStbNumber,
+    channelTitle: event.channelTitle,
     programTitle: event.programmeTitle,
     description: event.shortSynopsis || event.longSynopsis,
     genre: event.genre,
