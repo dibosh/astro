@@ -25,7 +25,13 @@ export function routerConfig ($stateProvider, $urlRouterProvider) {
       url: '/tv-guide',
       templateUrl: 'app/tv.guide/tv.guide.html',
       controller: 'TVGuideController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      resolve: {
+        events: (_, $q, EventsBasket) => {
+          let preloaded = !_.isEmpty(EventsBasket.events);
+          return  preloaded ? $q.when(EventsBasket.events) : EventsBasket.retrieveEventsForAllChannels();
+        }
+      }
     });
 
   $urlRouterProvider.otherwise('/channels');
