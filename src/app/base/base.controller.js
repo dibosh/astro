@@ -12,12 +12,17 @@ class BaseController {
       }
     ];
 
-    $rootScope.$on('$stateChangeStart', () => {
+    let stateChangeStartListener = $rootScope.$on('$stateChangeStart', () => {
       this.isStateLoading = true;
     });
 
-    $rootScope.$on('$stateChangeSuccess', () => {
+    let stateChangeEndListener = $rootScope.$on('$stateChangeSuccess', () => {
       this.isStateLoading = false;
+    });
+
+    $rootScope.$on('$destroy', function () {
+      stateChangeEndListener();
+      stateChangeStartListener();
     });
 
 
