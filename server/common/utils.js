@@ -78,10 +78,10 @@ utils.updateGlobalSettings = function (update) {
 
 utils.getErrorInterpretation = function (errorObject) {
   if (errorObject.hasOwnProperty('statusCode') && errorObject.hasOwnProperty('error')) {
-    // custom error object from request lib
+    // custom error object from request lib and from our app
     return {
       statusCode: _.get(errorObject, 'statusCode'),
-      resolvedResponse: _.get(errorObject, 'error.error')
+      resolvedResponse: _.get(errorObject, 'error.error') || _.get(errorObject, 'error')
     };
   } else {
     return {
@@ -91,6 +91,16 @@ utils.getErrorInterpretation = function (errorObject) {
       }
     }
   }
+};
+
+utils.createErrorObject = function (status, message) {
+  return {
+    statusCode: status,
+    error: {
+      status: status,
+      message: message
+    }
+  };
 };
 
 utils.prepareUrl = function (path, configVersion) {
