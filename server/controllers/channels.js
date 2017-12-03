@@ -111,7 +111,7 @@ function _cacheChannels(rawChannels) {
       var channelModel = utils.createChannelInstanceFromRaw(channel);
       channelModel.save(function (err, savedChannel) {
         if (err) {
-          reject(err);
+          reject(utils.createErrorObject(500, err.message));
         }
 
         channels.push(savedChannel);
