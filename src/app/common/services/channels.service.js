@@ -11,8 +11,16 @@ class ChannelsService {
     }
   }
 
-  getEvents(channelId, periodStart, periodEnd) {
+  getEventsForChannel(channelId, periodStart, periodEnd) {
     return this.simpleHttpService.makeGETRequest('channels/' + channelId + '/events', {periodStart: periodStart, periodEnd: periodEnd});
+  }
+
+  getEventsForAllChannels(periodStart, periodEnd) {
+    var requestConfig = {
+      startDate: periodStart,
+      endDate: periodEnd
+    };
+    return this.simpleHttpService.makeGETRequest('events/all', requestConfig);
   }
 }
 
