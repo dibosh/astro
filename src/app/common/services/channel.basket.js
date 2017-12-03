@@ -15,14 +15,12 @@ class ChannelBasket {
       });
   }
 
-  getChannelCategories() {
-    return this._.map(this._channels, (channel) => {
-      this._.get(channel, 'category');
-    });
+  getChannel(channelId) {
+    return this._.find(this._channels, (channel) => { return channel.channelId === channelId; });
   }
 
-  getChannel(channelId) {
-    return this._.find(this._channels, (channel) => { return channel.id === channelId; });
+  getChannelLogo(channelId) {
+    return this._.get(this.getChannel(channelId), 'logo');
   }
 
   get channels() {
