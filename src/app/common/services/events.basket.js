@@ -1,12 +1,11 @@
 class EventsBasket {
-  constructor(_, channelsService, moment, ChannelBasket) {
+  constructor(_, channelsService, moment) {
     this._channelsService = channelsService;
     this._moment = moment;
-    this._withinHours = 6;
-    this._ChannelBasket = ChannelBasket;
+    this._withinHours = 0.3;
     this._ = _;
 
-    if (_.isUndefined(this._events)) {
+    if (this._.isUndefined(this._events)) {
       this.retrieveEventsForAllChannels();
     }
   }
@@ -31,6 +30,6 @@ class EventsBasket {
   }
 }
 
-EventsBasket.$inject = ['_', 'channelsService', 'moment', 'ChannelBasket'];
+EventsBasket.$inject = ['_', 'channelsService', 'moment'];
 
 export default EventsBasket;
