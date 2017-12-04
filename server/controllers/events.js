@@ -3,12 +3,8 @@ var _ = require('lodash');
 var moment = require('moment');
 var router = express.Router({mergeParams: true});
 var utils = require('../common/utils');
-var cache = require('../middlewares/cache');
 var eventsUrl = utils.prepareEventsUrl(utils.configVersion);
 var Channel = require('../models/channel');
-
-// safe to cache 1 hour of upcoming events for specific request
-router.use(cache(60));
 
 router.get('/', function (req, res) {
   utils.handleHttpRequestPromise(_makeEventListResponse(req.query), res);
