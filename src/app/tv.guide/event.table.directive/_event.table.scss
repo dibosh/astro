@@ -1,0 +1,53 @@
+.channel-tiles-wrapper.events {
+  .main-content {
+    margin-top: 20px;
+  }
+  ul.pagination {
+    margin: 0;
+  }
+
+  .event-table {
+    td {
+      vertical-align: middle;
+    }
+
+    th.row-serial {
+      vertical-align: middle;
+    }
+
+    td.channel-info-cell {
+      width: 30%;
+    }
+
+    div.channel-info {
+      padding-left: 10px;
+
+      img.logo {
+        height: 45px;
+        padding: 0 5px;
+        object-fit: contain;
+        object-position: left;
+        margin-right: 8px;
+        background: $color-lynch;
+      }
+
+      span.title {
+        font-weight: 700;
+      }
+
+      span.stb-number {
+        font-weight: 600;
+        color: $color-lynch;
+      }
+    }
+
+    tbody {
+      tr {
+        td:first-child {
+          width: 20%;
+        }
+      }
+    }
+  }
+}
+

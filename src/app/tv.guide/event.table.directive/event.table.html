@@ -1,0 +1,49 @@
+<div class="channel-tiles-wrapper events">
+  <div class="filter-header">
+    <div class="filter-block pull-left">
+      <label for="sort-by" class="custom-label">Sort by</label>
+      <dropdown id="sort-by" items="sortByOptions" label-key="'label'" value-key="'value'"
+                on-item-select="sortBy(selectedItem)"></dropdown>
+    </div>
+    <div class="filter-block pull-right">
+      <ul uib-pagination total-items="totalCount" items-per-page="pageSize"
+          boundary-link-numbers="true" ng-model="currentPage" ng-change="onPageChange()"></ul>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="spinner" ng-if="isLoading">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+
+    <div class="alert alert-warning" ng-if="!events.length && !isLoading">
+      Sorry, could not create a program schedule. Please come again later.
+    </div>
+
+    <table class="event-table table table-bordered table-hover" ng-if="!isLoading && events.length">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th ng-repeat="header in headers">{{ header }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="row in events">
+        <th class="row-serial">{{ $index }}</th>
+        <td ng-repeat="header in headers" ng-class="{'channel-info-cell': isChannelInfo(header)}">
+          <div class="channel-info" ng-if="isChannelInfo(header)">
+            <img ng-src="{{ row[header].logo }}" alt="" class="logo">
+            <span class="title">{{ row[header].title }}</span>
+            <span class="stb-number">CH {{ row[header].number }}</span>
+          </div>
+          <span ng-if="isAiringTimeInfo(header)">{{ row[header] }}</span>
+          <span ng-if="isNormalInfo(header)">{{ row[header] }}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
