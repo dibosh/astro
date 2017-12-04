@@ -14,14 +14,14 @@ class ChannelDetailsModalInstanceController {
 
   loadEvents() {
     this.isEventsLoading = true;
-    let channelId = this.channel.id;
+    let channelId = this.channel.channelId;
     let dateTimeFormat = 'YYYY-MM-DD HH:mm';
     let onlyDateFormat = 'YYYY-MM-DD';
     let currentDateTime = this._moment();
     let onlyDate = currentDateTime.format(onlyDateFormat);
     let periodStart = currentDateTime.format(dateTimeFormat);
     let periodEnd = onlyDate + ' 23:59';
-    this._channelsService.getEvents(channelId, periodStart, periodEnd)
+    this._channelsService.getEventsForChannel(channelId, periodStart, periodEnd)
       .then((response) => {
         this.channelEvents = this._.map(response.events, (event)=>{
           event.airingTime = this._moment(event.airingTime).format('HH:mm');
