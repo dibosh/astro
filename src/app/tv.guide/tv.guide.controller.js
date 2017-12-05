@@ -14,7 +14,6 @@ class TVGuideController {
     this._.each(keys, (key) => {
       let newKey = (/(?:[a-z]+([A-Z][a-z]+))/.exec(key)[1]).toLowerCase();
       channel[newKey] = event[key];
-      delete event[key];
     });
 
     event.channel = channel;
