@@ -9,18 +9,19 @@ import './tv.guide/index.module';
 import './common/index.module';
 
 angular.module('astro', [
-      'ngAnimate',
-      'ngSanitize',
-      'ngMessages',
-      'ui.router',
-      'ui.calendar',
-      'ui.bootstrap',
-      'toastr',
-      // App specific modules
-      'astro.base',
-      'astro.common',
-      'astro.channels',
-      'astro.tv-guide'
+    'ngAnimate',
+    'ngSanitize',
+    'ngMessages',
+    'ui.router',
+    'ui.calendar',
+    'ui.bootstrap',
+    'toastr',
+    'satellizer',
+    // App specific modules
+    'astro.base',
+    'astro.common',
+    'astro.channels',
+    'astro.tv-guide'
   ])
   .constant('moment', moment)
   .constant('_', _)
