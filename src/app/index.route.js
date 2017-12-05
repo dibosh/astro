@@ -28,8 +28,8 @@ export function routerConfig ($stateProvider, $urlRouterProvider) {
       controllerAs: 'vm',
       resolve: {
         events: (_, $q, EventsBasket) => {
-          let preloaded = !_.isEmpty(EventsBasket.events);
-          return  preloaded ? $q.when(EventsBasket.events) : EventsBasket.retrieveEventsForAllChannels();
+          let shouldRefresh = EventsBasket.shouldRefresh();
+          return  !shouldRefresh ? $q.when(EventsBasket.events) : EventsBasket.retrieveEventsForAllChannels();
         }
       }
     });

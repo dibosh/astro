@@ -17,8 +17,17 @@ class EventsBasket {
     return this._channelsService.getEventsForAllChannels(startDate, endDate)
       .then((response) => {
         this._events = response.events;
+        this._lastUpdated = startDate;
         return this._events;
       });
+  }
+
+  shouldRefresh() {
+    let dateFormat = 'YYYY-MM-DD HH:mm';
+    let lastUpdated = this._moment(this._lastUpdated, dateFormat);
+    let now = this._moment();
+    let duration = this._moment.duration(now.diff(lastUpdated));
+    return this._.isEmpty(this._events) || duration.asMinutes() >= (60 * this._withinHours);
   }
 
   getEventsForChannel(channelId) {
