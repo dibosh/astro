@@ -1,8 +1,9 @@
 class ChannelsController {
 
-  constructor($document, $uibModal, channels) {
+  constructor($document, $uibModal, LocalStorage, channels) {
     this._modalFactory = $uibModal;
     this._documentService = $document;
+    this._localStorage = LocalStorage;
 
     this.channels = channels;
     this.isLoading = false;
@@ -23,8 +24,26 @@ class ChannelsController {
       }
     });
   }
+
+  onFavoriteClick(channel, isFavorite) {
+    let fbAuthToken = this._localStorage.get('fbAuthToken');
+    if (!fbAuthToken) {
+      this._showLogin();
+    }
+  }
+
+  _showLogin() {
+    this._modalFactory.open({
+      animation: true,
+      templateUrl: 'app/channels/partials/login.modal.html',
+      controller: 'LoginModalInstanceController',
+      controllerAs: 'modalCtrl',
+      size: 'sm',
+      appendTo: this._documentService.find('body')
+    });
+  }
 }
 
-ChannelsController.$inject = ['$document', '$uibModal', 'channels'];
+ChannelsController.$inject = ['$document', '$uibModal', 'LocalStorage', 'channels'];
 
 export default ChannelsController;

@@ -8,7 +8,8 @@ export function ChannelTilesDirective() {
     scope: {
       isLoading: '=',
       channels: '=',
-      onChannelClick: '&'
+      onChannelClick: '&',
+      onFavoriteClick: '&'
     },
     link: function (scope) {
       scope.sortByOptions = [
@@ -26,8 +27,10 @@ export function ChannelTilesDirective() {
         scope.sortChannelsBy = selectedSortOption.value;
       };
 
-      scope.toggleFavoriteFor = function (channel) {
-        channel.isFavorite = !channel.isFavorite;
+      scope.toggleFavoriteFor = function (channel, event) {
+        event.stopPropagation();
+        event.preventDefault();
+        scope.onFavoriteClick({channel: channel, isFavorite: !channel.isFavorite})
       };
     }
   };
