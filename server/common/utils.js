@@ -1,4 +1,5 @@
 var request = require('request-promise');
+var requestWithoutPromise = require('request');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var Channel = require('../models/channel');
@@ -119,6 +120,11 @@ utils.prepareEventsUrl = function (configVersion) {
   configVersion = configVersion || '';
   var eventsEndpoint = require('./config' + configVersion).EVENTS_ENDPOINT;
   return utils.prepareUrl(eventsEndpoint, configVersion);
+};
+
+utils.makeHttpRequestWithCallback = function (method, url, params, data, headers, callback) {
+  var requestConfig = _prepareHttpRequestConfig(method, url, params, data, headers);
+  return requestWithoutPromise(requestConfig, callback);
 };
 
 utils.makeHttpRequest = function (method, url, params, data, headers) {
