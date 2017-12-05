@@ -16,16 +16,10 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;
 var router = require('./controllers/index');
+var authRouter = require('./controllers/auth');
 
 // The client app
 app.use(express.static('./dist'));
-
-// CORS Support
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 // logging for all routes
 app.use(function (req, res, next) {
@@ -34,6 +28,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/api', router);
+app.use('/auth', authRouter);
 
 // Error handling
 app.use(function (err, req, res, next) {
