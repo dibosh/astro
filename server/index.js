@@ -3,12 +3,14 @@
  */
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 var utils = require('./common/utils');
 var app = express();
 
 // initialize the database
 utils.initializeDB();
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
