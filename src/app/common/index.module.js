@@ -4,7 +4,6 @@ import {OffClickDirective} from './components/off.click.directive';
 import {PaginationDirective} from './components/pagination/pagination.directive';
 import ChannelsService from './services/channels.service';
 import SimpleHTTPService from './services/simple.http.service';
-import LocalStorage from './services/local.storage';
 import ChannelBasket from './services/channel.basket';
 import EventsBasket from './services/events.basket';
 
@@ -15,6 +14,5 @@ angular.module('astro.common', [])
   .directive('pagination', PaginationDirective)
   .service('simpleHttpService', SimpleHTTPService)
   .service('channelsService', ChannelsService)
-  .service('LocalStorage', LocalStorage)
   .service('ChannelBasket', ChannelBasket)
   .service('EventsBasket', EventsBasket);
