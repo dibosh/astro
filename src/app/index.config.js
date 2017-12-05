@@ -12,10 +12,7 @@ export function config ($logProvider, toastrConfig, $authProvider) {
 
   // configure auth provider for facebook
   $authProvider.facebook({
-    name: 'facebook',
     clientId: '114659072652866', // orig
     // clientId: '1215110728590242', // test app
-    url: '/auth/facebook',
-    responseType: 'token'
   });
 }
