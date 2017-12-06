@@ -1,4 +1,4 @@
-export function ChannelTilesDirective(UserBasket) {
+export function ChannelTilesDirective(UserBasket, _) {
   'ngInject';
 
   let directive = {
