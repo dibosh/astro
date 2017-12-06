@@ -27,7 +27,7 @@ authHelper.ensureAuthenticated = function (req, res, next) {
 
 authHelper.createJWT = function (user) {
   var payload = {
-    sub: user._id,
+    sub: user.facebookProfileId,
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   };
