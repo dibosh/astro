@@ -1,4 +1,4 @@
-export function ChannelTilesDirective() {
+export function ChannelTilesDirective(UserBasket) {
   'ngInject';
 
   let directive = {
@@ -25,6 +25,13 @@ export function ChannelTilesDirective() {
 
       scope.sortBy = function (selectedSortOption) {
         scope.sortChannelsBy = selectedSortOption.value;
+      };
+
+      scope.isFavorite = function (channel) {
+        if (UserBasket.user) {
+          return _.indexOf(UserBasket.user.favoriteChannelIds, channel.channelId) > 0;
+        }
+        return false;
       };
 
       scope.toggleFavoriteFor = function (channel, event) {

@@ -26,7 +26,7 @@
           </div>
         </a>
         <div class="action-bar">
-          <span class="action" ng-class="{'selected': channel.isFavorite}"
+          <span class="action" ng-class="{'selected': isFavorite(channel)}"
                 ng-click="toggleFavoriteFor(channel, $event)">
             <i class="glyphicon glyphicon-heart"></i>
           </span>
