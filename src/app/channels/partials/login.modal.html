@@ -6,9 +6,10 @@
   <button class="btn btn-default" ng-click="modalCtrl.close()">Close</button>
 </div>
 <div class="modal-body">
-  <p>To be able to mark channels as favorite, we need you to sign in so that we can keep your preferences
+  <p ng-if="!modalCtrl.hasError()">To be able to mark channels as favorite, we need you to sign in so that we can keep your preferences
   saved. This way you can always see your previously marked favorite channels in your upcoming visits. We do not access
   and use any personal information from your <strong>facebook</strong> account against privacy policy.</p>
+  <p ng-if="modalCtrl.hasError()">The authentication process failed. {{ modalCtrl.error.message }}.</p>
 </div>
 <div class="modal-footer">
   <a class="btn btn-block btn-social btn-twitter" ng-click="modalCtrl.fbLogin()">

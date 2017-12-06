@@ -1,24 +1,31 @@
 class LoginModalInstanceController {
-  constructor($uibModalInstance, $auth) {
+  constructor($uibModalInstance, $auth, UserBasket, _) {
     this._$uibModalInstance = $uibModalInstance;
     this.auth = $auth;
+    this._ = _;
+    this.UserBasket = UserBasket;
   }
 
   fbLogin() {
     this.auth.authenticate('facebook')
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
+        this.UserBasket.user = response.data.user;
+        this._$uibModalInstance.close();
       })
-      .catch(function (response) {
-        console.log(response);
+      .catch((response) => {
+        this.error = response.message ? response : response.data;
       });
   }
 
   close() {
     this._$uibModalInstance.dismiss('cancel');
   }
+
+  hasError() {
+    return !this._.isUndefined(this.error);
+  }
 }
 
-LoginModalInstanceController.$inject = ['$uibModalInstance', '$auth'];
+LoginModalInstanceController.$inject = ['$uibModalInstance', '$auth', 'UserBasket', '_'];
 
 export default LoginModalInstanceController;
