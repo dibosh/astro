@@ -1,6 +1,7 @@
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var config = require('../common/config');
+var User = require('../models/user');
 var authHelper = {};
 
 authHelper.ensureAuthenticated = function (req, res, next) {
@@ -18,9 +19,20 @@ authHelper.ensureAuthenticated = function (req, res, next) {
   }
 
   if (payload.exp <= moment().unix()) {
-    return res.status(401).send({message: 'Token has expired'});
+    return res.status(401).send({message: 'Token has expired.'});
   }
-  req.user = payload.sub;
+
+  User.find({facebookProfileId: payload.sub}, function (err, user) {
+    if (!user) {
+      return res.status(404).send({message: 'User not found.'});
+    }
+
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    req.user = user;
+  });
 
   next();
 };
