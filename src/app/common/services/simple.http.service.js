@@ -4,11 +4,24 @@ class SimpleHTTPService {
     this.baseUrl = '/api/';
   }
 
-  makeGETRequest(endpoint, params) {
+  makeGETRequest(endpoint, params, headers) {
     let config = {
       method: 'GET',
       url: this.baseUrl + endpoint,
-      params: params
+      params: params,
+      headers: headers
+    };
+    return this.$http(config).then((response)=> {
+      return response.data;
+    });
+  }
+
+  makePUTRequest(endpoint, body, headers) {
+    let config = {
+      method: 'PUT',
+      url: this.baseUrl + endpoint,
+      data: body,
+      headers: headers
     };
     return this.$http(config).then((response)=> {
       return response.data;
