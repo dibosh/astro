@@ -13,7 +13,7 @@ router.get('/me', function (req, res) {
 
   var token = req.header('Authorization').split(' ')[1];
   var payload = jwt.decode(token, config.TOKEN_SECRET);
-  User.findById(payload.sub, function (err, user) {
+  User.find({facebookProfileId: payload.sub}, function (err, user) {
     if (!user) {
       return respond(res, 404, {message: 'User not found.'});
     }
