@@ -1,9 +1,11 @@
 class ChannelsController {
 
-  constructor($document, $uibModal, LocalStorage, channels) {
+  constructor($document, $uibModal, UserBasket, userService, toastr, channels) {
     this._modalFactory = $uibModal;
     this._documentService = $document;
-    this._localStorage = LocalStorage;
+    this._UserBasket = UserBasket;
+    this._userService = userService;
+    this._toastr = toastr;
 
     this.channels = channels;
     this.isLoading = false;
@@ -26,14 +28,18 @@ class ChannelsController {
   }
 
   onFavoriteClick(channel, isFavorite) {
-    let fbAuthToken = this._localStorage.get('fbAuthToken');
-    if (!fbAuthToken) {
-      this._showLogin();
+    if (!this._auth.isAuthenticated()) {
+      this._showLogin().result
+        .then(()=> {
+          this._updateUserFavoriteChannels(channel.channelId, isFavorite);
+        });
+    } else {
+      this._updateUserFavoriteChannels(channel.channelId, isFavorite);
     }
   }
 
   _showLogin() {
-    this._modalFactory.open({
+    return this._modalFactory.open({
       animation: true,
       templateUrl: 'app/channels/partials/login.modal.html',
       controller: 'LoginModalInstanceController',
@@ -42,8 +48,28 @@ class ChannelsController {
       appendTo: this._documentService.find('body')
     });
   }
+
+  _updateUserFavoriteChannels(channelId, isFavorite) {
+    if (isFavorite) {
+      this._UserBasket.user.favoriteChannelIds.push(channelId);
+    } else {
+      let removeableIndex = this._.indexOf(this._UserBasket.user.favoriteChannelIds, channelId);
+      if (removeableIndex > 0) {
+        this._UserBasket.user.favoriteChannelIds.splice(removeableIndex, 1);
+      }
+    }
+
+    this._userService.updateUser()
+      .then((updatedUser) => {
+        this._UserBasket.user = updatedUser;
+        this._toastr.success('Successfully saved the favorites.');
+      })
+      .catch(() => {
+        this._toastr.warning('Could not save the favorites.');
+      });
+  }
 }
 
-ChannelsController.$inject = ['$document', '$uibModal', 'LocalStorage', 'channels'];
+ChannelsController.$inject = ['$document', '$uibModal', 'UserBasket', 'userService', 'toastr', 'channels'];
 
 export default ChannelsController;
