@@ -33,9 +33,7 @@ router.put('/favoriteChannels', authHelper.ensureAuthenticated, function (req, r
 
         resolve({
           status: 200,
-          body: {
-            message: 'Channels with specified ids were added as favorite for user ' + savedUser.displayName
-          }
+          user: savedUser
         });
       });
     });
