@@ -8,13 +8,11 @@ var moment = require('moment');
 var User = require('../models/user');
 var _ = require('lodash');
 
-router.put('/favoriteChannels', authHelper.ensureAuthenticated, function (req, res) {
+router.put('/me', authHelper.ensureAuthenticated, function (req, res) {
   var promise = new Promise(function (resolve, reject) {
-    if (_.isUndefined(req.body.channelIds)) {
-      reject(utils.createErrorObject(500, 'channelIds must be provided.'));
+    if (_.isUndefined(req.body)) {
+      reject(utils.createErrorObject(500, 'Nothing to update.'));
     }
-
-    var channelIds = req.body.channelIds.split(',');
 
     User.findById(req.user._id, function (err, foundUser) {
       if (err) {
@@ -25,7 +23,7 @@ router.put('/favoriteChannels', authHelper.ensureAuthenticated, function (req, r
         reject(utils.createErrorObject(404, 'User not found.'));
       }
 
-      foundUser.favoriteChannelIds = channelIds;
+      foundUser.favoriteChannelIds = req.body.favoriteChannelIds;
       foundUser.save(function (err, savedUser) {
         if (err) {
           reject(utils.createErrorObject(500, err.message));
@@ -33,7 +31,7 @@ router.put('/favoriteChannels', authHelper.ensureAuthenticated, function (req, r
 
         resolve({
           status: 200,
-          user: savedUser
+          body: savedUser
         });
       });
     });
