@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var channelSchema = new Schema({
-  channelId: {type: Number, required: true, unique: true},
+  channelId: {type: Number, required: true},
   title: {type: String, required: true},
   description: {type: String},
   category: {type: String},
