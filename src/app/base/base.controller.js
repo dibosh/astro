@@ -34,13 +34,14 @@ class BaseController {
       this.isStateLoading = false;
     });
 
+    let userUpdateListener = $rootScope.$on(UserBasket.USER_UPDATED_NOTIFY, (data) => {
+      this.user = data.user;
+    });
+
     $rootScope.$on('$destroy', () => {
       stateChangeEndListener();
       stateChangeStartListener();
-    });
-
-    $rootScope.$on(UserBasket.USER_UPDATED_NOTIFY, (data) => {
-      this.user = data.user;
+      userUpdateListener();
     });
 
     this.brand = {
