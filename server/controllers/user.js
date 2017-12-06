@@ -4,20 +4,35 @@ var config = require('../common/config');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var User = require('../models/user');
+var _ = require('lodash');
 
 router.get('/me', function (req, res) {
+  if (_.isEmpty(req.header('Authorization'))) {
+    return respond(res, 400, {message: 'Auth token must be passed in headers.'});
+  }
+
   var token = req.header('Authorization').split(' ')[1];
   var payload = jwt.decode(token, config.TOKEN_SECRET);
   User.findById(payload.sub, function (err, user) {
     if (!user) {
-      return res.status(400).send({message: 'User not found'});
+      return respond(res, 404, {message: 'User not found.'});
     }
 
     if (err) {
-      return res.status(500).send({message: err.message});
+      return respond(res, 500, err);
     }
-    return res.status(200).send(user);
+
+    return respond(res, 200, null, user);
   });
 });
+
+function respond(res, status, err, user) {
+  if (err) {
+    return res.status(status).send({status: status, error: err.message});
+  }
+  if (user) {
+    return res.status(status).send({status: status, user: user});
+  }
+}
 
 module.exports = router;
