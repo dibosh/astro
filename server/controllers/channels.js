@@ -19,21 +19,6 @@ router.get('/:channelId/events', function (req, res) {
   utils.handleHttpRequestPromise(_makeEventListResponse(req.params.channelId, req.query.startTime), res);
 });
 
-router.put('/markAsFavorite/:consent', function (req, res) {
-  var channelIds = req.body.channelIds.split(',');
-  var isFavorite = req.params.consent === 'yes';
-  var promise = _markChannelsAsFavorite(channelIds, isFavorite)
-    .then(function () {
-      return {
-        status: 200,
-        body: {
-          message: 'Channels with specified ids were updated successfully.'
-        }
-      };
-    });
-  utils.handleHttpRequestPromise(promise, res);
-});
-
 function _makePaginatedChannelListResponse(pageSize, pageNumber) {
   pageSize = parseInt(pageSize || 10);
   var offset = parseInt(pageNumber || 1) - 1;
@@ -122,23 +107,6 @@ function _cacheChannels(rawChannels) {
       });
     });
   });
-}
-
-function _markChannelsAsFavorite(channelIds, isFavorite) {
-  return Channel.find()
-    .where('channelId')
-    .in(channelIds)
-    .exec()
-    .then(function (channels) {
-      _.each(channels, function (channel) {
-        channel.isFavorite = isFavorite;
-        channel.save(function (err) {
-          if (err) {
-            throw err;
-          }
-        });
-      });
-    });
 }
 
 module.exports = router;
