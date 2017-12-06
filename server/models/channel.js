@@ -10,8 +10,7 @@ var channelSchema = new Schema({
   language: {type: String},
   color: {type: String},
   logo: {type: String},
-  isHD: {type: Boolean},
-  isFavorite: {type: Boolean, default: false}
+  isHD: {type: Boolean}
 }, {
   timestamps: true
 });
