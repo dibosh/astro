@@ -14,47 +14,11 @@ class UserService {
       });
   }
 
-  addChannelToFavorites(channelId) {
-    let deferred = this.$q.defer();
-    let currentUser = this._checkCurrentUser(deferred);
-
-    let favChannelIds = currentUser.favoriteChannelIds || [];
-    favChannelIds.push(channelId);
-
-    this._updateFavoriteChannels(favChannelIds, deferred);
-
-    return deferred.promise;
-  }
-
-  removeChannelFromFavorites(channelId) {
-    let deferred = this.$q.defer();
-    let currentUser = this._checkCurrentUser(deferred);
-    let favChannelIds = currentUser.favoriteChannelIds || [];
-    let removableChannelIndex = _.indexOf(favChannelIds, channelId);
-    favChannelIds.splice(removableChannelIndex, 1);
-
-    this._updateFavoriteChannels(favChannelIds, deferred);
-
-    return deferred.promise;
-  }
-
-  _updateFavoriteChannels(channelIds, deferred) {
-    this.httpService.makePUTRequest('user/favoriteChannels', {channelIds: channelIds}, this._getAuthHeader())
-      .then((response) => {
-        return deferred.resolve(response);
-      })
-      .catch((err) => {
-        return deferred.reject(err);
+  updateUser() {
+    return this.httpService.makePUTRequest('user/me', this.UserBasket.user, this._getAuthHeader())
+      .then((updatedUser) => {
+        return updatedUser;
       });
-  }
-
-  _checkCurrentUser(deferred) {
-    let currentUser = this.UserBasket.user;
-    if (this._.isUndefined(currentUser)) {
-      return deferred.reject({message: 'No current user.'});
-    }
-
-    return currentUser;
   }
 
   _getAuthHeader() {
