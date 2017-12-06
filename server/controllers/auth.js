@@ -69,7 +69,6 @@ function _fetchProfile(url, params, successCallback, failureCallback) {
           return failureCallback(500, {message: err.message});
         }
         var token = authHelper.createJWT(savedUser);
-        console.log(token);
         successCallback({token: token, user: savedUser});
       });
     });
