@@ -1,11 +1,13 @@
 class ChannelsController {
 
-  constructor($document, $uibModal, UserBasket, userService, toastr, channels) {
+  constructor($document, $uibModal, UserBasket, userService, $auth, toastr, _, channels) {
     this._modalFactory = $uibModal;
     this._documentService = $document;
     this._UserBasket = UserBasket;
     this._userService = userService;
     this._toastr = toastr;
+    this._auth = $auth;
+    this._ = _;
 
     this.channels = channels;
     this.isLoading = false;
@@ -50,26 +52,25 @@ class ChannelsController {
   }
 
   _updateUserFavoriteChannels(channelId, isFavorite) {
-    if (isFavorite) {
-      this._UserBasket.user.favoriteChannelIds.push(channelId);
-    } else {
-      let removeableIndex = this._.indexOf(this._UserBasket.user.favoriteChannelIds, channelId);
-      if (removeableIndex > 0) {
-        this._UserBasket.user.favoriteChannelIds.splice(removeableIndex, 1);
-      }
+    if (!this._UserBasket.user) {
+      return;
     }
 
-    this._userService.updateUser()
+    let favoriteChannelsSet = new Set(this._UserBasket.user.favoriteChannelIds);
+    favoriteChannelsSet[isFavorite ? 'add' : 'delete'](channelId);
+    this._UserBasket.user.favoriteChannelIds = Array.from(favoriteChannelsSet);
+
+    this._userService.updateUser(this._UserBasket.user)
       .then((updatedUser) => {
         this._UserBasket.user = updatedUser;
-        this._toastr.success('Successfully saved the favorites.');
+        this._toastr.success('Successfully updated the favorites.');
       })
       .catch(() => {
-        this._toastr.warning('Could not save the favorites.');
+        this._toastr.warning('Could not update the favorites.');
       });
   }
 }
 
-ChannelsController.$inject = ['$document', '$uibModal', 'UserBasket', 'userService', 'toastr', 'channels'];
+ChannelsController.$inject = ['$document', '$uibModal', 'UserBasket', 'userService', '$auth', 'toastr', '_', 'channels'];
 
 export default ChannelsController;
