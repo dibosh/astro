@@ -22,7 +22,7 @@ authHelper.ensureAuthenticated = function (req, res, next) {
     return res.status(401).send({message: 'Token has expired.'});
   }
 
-  User.find({facebookProfileId: payload.sub}, function (err, user) {
+  User.findOne({facebookProfileId: payload.sub}, function (err, user) {
     if (!user) {
       return res.status(404).send({message: 'User not found.'});
     }
