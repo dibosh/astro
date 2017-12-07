@@ -8,6 +8,7 @@ import SimpleHTTPService from './services/simple.http.service';
 import ChannelBasket from './services/channel.basket';
 import EventsBasket from './services/events.basket';
 import UserBasket from './services/user.basket';
+import DestroyListener from './services/destroy.listener';
 
 angular.module('astro.common', [])
   .directive('acmeNavbar', NavbarDirective)
@@ -19,4 +20,5 @@ angular.module('astro.common', [])
   .service('userService', UserService)
   .service('ChannelBasket', ChannelBasket)
   .service('EventsBasket', EventsBasket)
-  .service('UserBasket', UserBasket);
+  .service('UserBasket', UserBasket)
+  .service('DestroyListener', DestroyListener);
