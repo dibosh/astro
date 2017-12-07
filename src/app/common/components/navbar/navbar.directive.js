@@ -1,4 +1,4 @@
-export function NavbarDirective() {
+export function NavbarDirective($auth, $rootScope) {
   'ngInject';
 
   let directive = {
@@ -14,8 +14,16 @@ export function NavbarDirective() {
     link: function (scope) {
       scope.isNavbarCollapsed = true;
 
+      $rootScope.$on('onUserUpdate', (event, args) => {
+        scope.currentUser = args.user;
+      });
+
       scope.toggleCollapse = function () {
         scope.isNavbarCollapsed = !scope.isNavbarCollapsed;
+      };
+
+      scope.logOut = function () {
+        $auth.logout();
       }
     }
   };

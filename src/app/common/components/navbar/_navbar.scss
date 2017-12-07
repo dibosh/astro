@@ -34,6 +34,36 @@
     }
   }
 
+  .navbar-collapse {
+    ul.navbar-nav {
+      li {
+        cursor: pointer;
+      }
+    }
+
+    .navbar-text {
+      font-size: 12px;
+      line-height: 20px;
+      margin: 0;
+      padding: 15px;
+      box-sizing: border-box;
+
+      img.avatar {
+        display: inline-block;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        object-fit: cover;
+        box-shadow: 0 1px rgba(0, 0, 0, 0.3);
+        margin-left: 10px;
+      }
+      span.name {
+        color: white;
+        font-weight: 600;
+      }
+    }
+  }
+
   // google material style load-bar
   .load-bar {
     position: absolute;

@@ -20,6 +20,15 @@
           </a>
         </li>
       </ul>
+
+      <ul class="nav navbar-nav navbar-right" ng-if="currentUser">
+        <li><a ng-click="logOut()">Sign out</a></li>
+      </ul>
+      <p class="navbar-text navbar-right" ng-if="currentUser">
+        Signed in as
+        <img ng-src="{{ currentUser.picture }}" class="avatar">
+        <span class="name">{{ currentUser.displayName }}</span>
+      </p>
     </div>
   </div>
   <div class="load-bar" ng-if="isPageLoading">
