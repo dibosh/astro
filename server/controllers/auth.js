@@ -53,7 +53,8 @@ function _fetchProfile(url, params, successCallback, failureCallback) {
 
     User.findOne({facebookProfileId: profile.id}, function (err, existingUser) {
       if (existingUser) {
-        return failureCallback(409, {message: 'There is already a Facebook account that belongs to you'});
+        var token = authHelper.createJWT(existingUser);
+        return successCallback({token: token, user: existingUser});
       }
 
       if (err) {
@@ -69,7 +70,7 @@ function _fetchProfile(url, params, successCallback, failureCallback) {
           return failureCallback(500, {message: err.message});
         }
         var token = authHelper.createJWT(savedUser);
-        successCallback({token: token, user: savedUser});
+        return successCallback({token: token, user: savedUser});
       });
     });
   });
