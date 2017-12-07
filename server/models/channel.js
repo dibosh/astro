@@ -6,7 +6,7 @@ var channelSchema = new Schema({
   title: {type: String, required: true},
   description: {type: String},
   category: {type: String},
-  setTopBoxNumber: {type: Number, required: true},
+  setTopBoxNumber: {type: Number, required: true, unique: true},
   language: {type: String},
   color: {type: String},
   logo: {type: String},
