@@ -20,6 +20,8 @@ export function routerConfig ($stateProvider, $urlRouterProvider) {
                 if (err.status === 404) {
                   $auth.logout();
                   deferred.resolve(null);
+                } else {
+                  deferred.reject(err);
                 }
               });
           } else {
