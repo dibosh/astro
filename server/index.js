@@ -52,17 +52,14 @@ process.on('SIGINT', shutDown);
 let connections = [];
 
 server.on('connection', function (connection) {
-    connections.push(connection);
-    connection.on('close', function () {
-      connections = connections.filter(function (curr) {
-        return curr !== connection;
-      });
-    });
-});
-
-setInterval(function () {
+  connections.push(connection);
   console.log('%s connections currently open', connections.length);
-}, 1000);
+  connection.on('close', function () {
+    connections = connections.filter(function (curr) {
+      return curr !== connection;
+    });
+  });
+});
 
 function shutDown() {
   console.log('Received kill signal, shutting down gracefully');
