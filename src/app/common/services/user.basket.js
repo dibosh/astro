@@ -12,8 +12,8 @@ class UserBasket {
 
   fetch() {
     return this.userService.getCurrentUser()
-      .then((data) => {
-        this.user = data[0];
+      .then((user) => {
+        this.user = user;
         return this.user;
       });
   }

@@ -40,6 +40,31 @@ router.put('/me', authHelper.ensureAuthenticated, function (req, res) {
   utils.handleHttpRequestPromise(promise, res);
 });
 
+router.delete('/:fbProfileId', function (req, res) {
+  var promise = new Promise(function (resolve, reject) {
+    var facebookProfileId = req.params.fbProfileId;
+
+    if (_.isUndefined(req.params.fbProfileId)) {
+      reject(utils.createErrorObject(500, 'Facebook profile ID of the user has to be provided.'));
+    }
+
+    User.findOne({facebookProfileId: facebookProfileId}).remove(function (err) {
+      if (err) {
+        reject(utils.createErrorObject(500, err.message));
+      }
+
+      resolve({
+        status: 204,
+        body: {
+          message: 'Deleted the user.'
+        }
+      });
+    });
+  });
+
+  utils.handleHttpRequestPromise(promise, res);
+});
+
 router.get('/me', function (req, res) {
   if (_.isEmpty(req.header('Authorization'))) {
     return respond(res, 400, {message: 'Auth token must be passed in headers.'});
@@ -47,7 +72,7 @@ router.get('/me', function (req, res) {
 
   var token = req.header('Authorization').split(' ')[1];
   var payload = jwt.decode(token, config.TOKEN_SECRET);
-  User.find({facebookProfileId: payload.sub}, function (err, user) {
+  User.findOne({facebookProfileId: payload.sub}, function (err, user) {
     if (!user) {
       return respond(res, 404, {message: 'User not found.'});
     }
