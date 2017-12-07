@@ -8,6 +8,24 @@ export function routerConfig ($stateProvider, $urlRouterProvider) {
         channels: (_, $q, ChannelBasket) => {
           let preloaded = !_.isEmpty(ChannelBasket.channels);
           return  preloaded ? $q.when(ChannelBasket.channels) : ChannelBasket.retrieveChannels();
+        },
+        user: (UserBasket, $q, $auth) => {
+          let deferred = $q.defer();
+          if (UserBasket.shouldFetch()) {
+            UserBasket.fetch()
+              .then((user) => {
+                deferred.resolve(user);
+              })
+              .catch((err) => {
+                if (err.status === 404) {
+                  $auth.logout();
+                  deferred.resolve(null);
+                }
+              });
+          } else {
+            deferred.resolve(UserBasket.user);
+          }
+          return deferred.promise;
         }
       }
     });
