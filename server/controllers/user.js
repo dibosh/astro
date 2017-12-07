@@ -14,7 +14,7 @@ router.put('/me', authHelper.ensureAuthenticated, function (req, res) {
       reject(utils.createErrorObject(500, 'Nothing to update.'));
     }
 
-    User.findById(req.user._id, function (err, foundUser) {
+    User.findOne({facebookProfileId: req.user.facebookProfileId}, function (err, foundUser) {
       if (err) {
         reject(utils.createErrorObject(500, err.message));
       }
