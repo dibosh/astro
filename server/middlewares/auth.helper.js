@@ -32,9 +32,8 @@ authHelper.ensureAuthenticated = function (req, res, next) {
     }
 
     req.user = user;
+    next();
   });
-
-  next();
 };
 
 authHelper.createJWT = function (user) {
