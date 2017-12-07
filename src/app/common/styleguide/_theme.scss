@@ -5,6 +5,9 @@ $navbar-inverse-toggle-border-color: $color-secondary;
 $btn-default-bg: $color-primary;
 $btn-default-color: white;
 
+.toast-top-right {
+  top: 70px;
+}
 
 .btn {
   outline: none !important;
