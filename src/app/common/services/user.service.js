@@ -1,8 +1,7 @@
 class UserService {
-  constructor(simpleHttpService, $auth, UserBasket, $q, _) {
+  constructor(simpleHttpService, $auth, $q, _) {
     this.httpService = simpleHttpService;
     this.$auth = $auth;
-    this.UserBasket = UserBasket;
     this.$q = $q;
     this._ = _;
   }
@@ -14,8 +13,8 @@ class UserService {
       });
   }
 
-  updateUser() {
-    return this.httpService.makePUTRequest('user/me', this.UserBasket.user, this._getAuthHeader())
+  updateUser(user) {
+    return this.httpService.makePUTRequest('user/me', user, this._getAuthHeader())
       .then((updatedUser) => {
         return updatedUser;
       });
@@ -28,6 +27,6 @@ class UserService {
   }
 }
 
-UserService.$inject = ['simpleHttpService', '$auth', 'UserBasket', '$q', '_'];
+UserService.$inject = ['simpleHttpService', '$auth', '$q', '_'];
 
 export default UserService;
