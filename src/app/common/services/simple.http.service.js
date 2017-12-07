@@ -27,6 +27,17 @@ class SimpleHTTPService {
       return response.data;
     });
   }
+
+  makeDELETERequest(endpoint, headers) {
+    let config = {
+      method: 'DELETE',
+      url: this.baseUrl + endpoint,
+      headers: headers
+    };
+    return this.$http(config).then((response)=> {
+      return response.data;
+    });
+  }
 }
 
 SimpleHTTPService.$inject = ['$http'];
