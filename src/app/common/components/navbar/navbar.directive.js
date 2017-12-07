@@ -1,4 +1,4 @@
-export function NavbarDirective($auth, $rootScope) {
+export function NavbarDirective($auth, $rootScope, DestroyListener, userService) {
   'ngInject';
 
   let directive = {
@@ -14,9 +14,11 @@ export function NavbarDirective($auth, $rootScope) {
     link: function (scope) {
       scope.isNavbarCollapsed = true;
 
-      $rootScope.$on('onUserUpdate', (event, args) => {
+      let onUserUpdate = $rootScope.$on('onUserUpdate', (event, args) => {
         scope.currentUser = args.user;
       });
+
+      DestroyListener.addObserver(onUserUpdate);
 
       scope.toggleCollapse = function () {
         scope.isNavbarCollapsed = !scope.isNavbarCollapsed;
@@ -24,6 +26,7 @@ export function NavbarDirective($auth, $rootScope) {
 
       scope.logOut = function () {
         $auth.logout();
+        userService.logOutUser();
       }
     }
   };
