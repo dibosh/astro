@@ -29,7 +29,7 @@ export function ChannelTilesDirective(UserBasket, _) {
 
       scope.isFavorite = function (channel) {
         if (UserBasket.user) {
-          return _.indexOf(UserBasket.user.favoriteChannelIds, channel.channelId) > 0;
+          return _.indexOf(UserBasket.user.favoriteChannelIds, channel.channelId) !== -1;
         }
         return false;
       };
@@ -37,7 +37,8 @@ export function ChannelTilesDirective(UserBasket, _) {
       scope.toggleFavoriteFor = function (channel, event) {
         event.stopPropagation();
         event.preventDefault();
-        scope.onFavoriteClick({channel: channel, isFavorite: !channel.isFavorite})
+        let isFavorite = scope.isFavorite(channel);
+        scope.onFavoriteClick({channel: channel, isFavorite: !isFavorite});
       };
     }
   };
