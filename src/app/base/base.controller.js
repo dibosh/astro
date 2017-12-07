@@ -1,5 +1,5 @@
 class BaseController {
-  constructor ($rootScope) {
+  constructor ($rootScope, DestroyListener) {
     this.isStateLoading = false;
     this.navs = [
       {
@@ -20,10 +20,8 @@ class BaseController {
       this.isStateLoading = false;
     });
 
-    $rootScope.$on('$destroy', () => {
-      stateChangeEndListener();
-      stateChangeStartListener();
-    });
+    DestroyListener.addObserver(stateChangeEndListener);
+    DestroyListener.addObserver(stateChangeStartListener);
 
     this.brand = {
       url: 'https://www.astro.com.my/',
@@ -32,6 +30,6 @@ class BaseController {
   }
 }
 
-BaseController.$inject = ['$rootScope'];
+BaseController.$inject = ['$rootScope', 'DestroyListener'];
 
 export default BaseController;
