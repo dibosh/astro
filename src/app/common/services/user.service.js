@@ -1,10 +1,9 @@
 class UserService {
-  constructor(simpleHttpService, $auth, $q, _, UserBasket) {
+  constructor(simpleHttpService, $auth, $q, _) {
     this.httpService = simpleHttpService;
     this.$auth = $auth;
     this.$q = $q;
     this._ = _;
-    this.UserBasket = UserBasket;
   }
 
   getCurrentUser() {
@@ -23,10 +22,7 @@ class UserService {
 
   logOutUser() {
     let fbId = this.UserBasket.user.facebookProfileId;
-    return this.httpService.makeDELETERequest('user/' + fbId)
-      .then(() => {
-        this.UserBasket.user = null;
-      });
+    return this.httpService.makeDELETERequest('user/' + fbId);
   }
 
   _getAuthHeader() {
@@ -36,6 +32,6 @@ class UserService {
   }
 }
 
-UserService.$inject = ['simpleHttpService', '$auth', '$q', '_', 'UserBasket'];
+UserService.$inject = ['simpleHttpService', '$auth', '$q', '_'];
 
 export default UserService;

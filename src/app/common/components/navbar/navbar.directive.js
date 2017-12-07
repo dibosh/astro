@@ -1,4 +1,4 @@
-export function NavbarDirective($auth, $rootScope, DestroyListener, userService) {
+export function NavbarDirective($auth, $rootScope, DestroyListener, userService, UserBasket) {
   'ngInject';
 
   let directive = {
@@ -26,7 +26,10 @@ export function NavbarDirective($auth, $rootScope, DestroyListener, userService)
 
       scope.logOut = function () {
         $auth.logout();
-        userService.logOutUser();
+        userService.logOutUser()
+          .then(() => {
+            UserBasket.user = null;
+          });
       }
     }
   };
