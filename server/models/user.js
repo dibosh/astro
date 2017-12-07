@@ -5,7 +5,7 @@ var userSchema = new Schema({
   displayName: {type: String},
   picture: {type: String},
   facebookProfileId: {type: String},
-  favoriteChannelIds: [{type: String}] 
+  favoriteChannelIds: [{type: Number}]
 }, {
   timestamps: true
 });
