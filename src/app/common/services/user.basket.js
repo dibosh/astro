@@ -1,8 +1,9 @@
 class UserBasket {
-  constructor(_, $rootScope, userService) {
+  constructor(_, $rootScope, userService, $auth) {
     this._ = _;
     this.$rootScope = $rootScope;
     this.userService = userService;
+    this.$auth = $auth;
   }
 
   shouldFetch() {
@@ -11,8 +12,8 @@ class UserBasket {
 
   fetch() {
     return this.userService.getCurrentUser()
-      .then((user) => {
-        this.user = user;
+      .then((data) => {
+        this.user = data[0];
         return this.user;
       });
   }
@@ -26,15 +27,11 @@ class UserBasket {
     return this._user;
   }
 
-  get USER_UPDATED_NOTIFY() {
-    return 'userUpdate';
-  }
-
   _broadcast() {
-    this.$rootScope.$broadcast(this.USER_UPDATED_NOTIFY, {user: this.user});
+    this.$rootScope.$broadcast('onUserUpdate', {user: this.user});
   }
 }
 
-UserBasket.$inject = ['_', '$rootScope', 'userService'];
+UserBasket.$inject = ['_', '$rootScope', 'userService', '$auth'];
 
 export default UserBasket;
