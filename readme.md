@@ -37,4 +37,4 @@
    - `pm2 start server/index.js -i 4` (spin up 4 instances and let pm2 load
    balance)
 
-Check out the [live](ec2-18-217-186-253.us-east-2.compute.amazonaws.com:8080) site.
+Check out the [live](http://ec2-18-217-186-253.us-east-2.compute.amazonaws.com:8080) site.
