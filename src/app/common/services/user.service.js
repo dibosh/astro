@@ -1,9 +1,10 @@
 class UserService {
-  constructor(simpleHttpService, $auth, $q, _) {
+  constructor(simpleHttpService, $auth, $q, _, $http) {
     this.httpService = simpleHttpService;
     this.$auth = $auth;
     this.$q = $q;
     this._ = _;
+    this.$http = $http;
   }
 
   getCurrentUser() {
@@ -38,6 +39,6 @@ class UserService {
   }
 }
 
-UserService.$inject = ['simpleHttpService', '$auth', '$q', '_'];
+UserService.$inject = ['simpleHttpService', '$auth', '$q', '_', '$http'];
 
 export default UserService;

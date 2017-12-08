@@ -5,6 +5,7 @@ var utils = require('../common/utils');
 var config = require('../common/config');
 var jwt = require('jwt-simple');
 var moment = require('moment');
+var _ = require('lodash');
 var User = require('../models/user');
 
 router.post('/facebook', function (req, res) {
