@@ -20,9 +20,8 @@ class UserService {
       });
   }
 
-  logOutUser() {
-    let fbId = this.UserBasket.user.facebookProfileId;
-    return this.httpService.makeDELETERequest('user/' + fbId);
+  logOutUser(user) {
+    return this.httpService.makePOSTRequest('auth/logout', {facebookProfileId: user.facebookProfileId});
   }
 
   _getAuthHeader() {
