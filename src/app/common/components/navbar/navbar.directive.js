@@ -26,7 +26,7 @@ export function NavbarDirective($auth, $rootScope, DestroyListener, userService,
 
       scope.logOut = function () {
         $auth.logout();
-        userService.logOutUser()
+        userService.logOutUser(UserBasket.user)
           .then(() => {
             UserBasket.user = null;
           });
