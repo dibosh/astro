@@ -28,10 +28,11 @@ class SimpleHTTPService {
     });
   }
 
-  makeDELETERequest(endpoint, headers) {
+  makePOSTRequest(endpoint, body, headers) {
     let config = {
-      method: 'DELETE',
+      method: 'POST',
       url: this.baseUrl + endpoint,
+      data: body,
       headers: headers
     };
     return this.$http(config).then((response)=> {
