@@ -27,18 +27,6 @@ class SimpleHTTPService {
       return response.data;
     });
   }
-
-  makePOSTRequest(endpoint, body, headers) {
-    let config = {
-      method: 'POST',
-      url: this.baseUrl + endpoint,
-      data: body,
-      headers: headers
-    };
-    return this.$http(config).then((response)=> {
-      return response.data;
-    });
-  }
 }
 
 SimpleHTTPService.$inject = ['$http'];

@@ -21,7 +21,14 @@ class UserService {
   }
 
   logOutUser(user) {
-    return this.httpService.makePOSTRequest('auth/logout', {facebookProfileId: user.facebookProfileId});
+    let config = {
+      method: 'POST',
+      url: '/auth/logout',
+      data: {facebookProfileId: user.facebookProfileId}
+    };
+    return this.$http(config).then((response)=> {
+      return response.data;
+    });
   }
 
   _getAuthHeader() {
