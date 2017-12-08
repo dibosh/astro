@@ -1,3 +1,10 @@
+## [1.0.0] - 2017-12-08
+#### Added
+- FB Login
+- User favorites save in server
+- TV Guide for next 1 hour
+- Channel details
+
 ## [0.0.3] - 2017-12-02
 #### Added
 - Channel cache
