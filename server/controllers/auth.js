@@ -35,6 +35,31 @@ router.post('/facebook', function (req, res) {
   _fetchAccessToken(accessTokenUrl, params, redirectRequest, successCallback, failureCallback);
 });
 
+router.post('/logout', function (req, res) {
+  var promise = new Promise(function (resolve, reject) {
+    var facebookProfileId = req.body.facebookProfileId;
+
+    if (_.isUndefined(facebookProfileId)) {
+      reject(utils.createErrorObject(500, 'Facebook profile ID of the user has to be provided.'));
+    }
+
+    User.findOne({facebookProfileId: facebookProfileId}).remove(function (err) {
+      if (err) {
+        reject(utils.createErrorObject(500, err.message));
+      }
+
+      resolve({
+        status: 200,
+        body: {
+          message: 'Logged out successfully.'
+        }
+      });
+    });
+  });
+
+  utils.handleHttpRequestPromise(promise, res);
+});
+
 function _fetchAccessToken(url, params, redirectRequest, successCallback, failureCallback) {
   utils.makeHttpRequestWithCallback(null, url, params, null, null, function (err, response, accessToken) {
     if (response.statusCode !== 200) {
